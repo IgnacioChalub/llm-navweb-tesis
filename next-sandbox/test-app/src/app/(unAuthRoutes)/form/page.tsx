@@ -6,7 +6,7 @@ import styles from '../../styles/form.module.css';
 const FormPage = () => {
     const [formData, setFormData] = useState({
         name: '',
-        age: 0,
+        age: '',
         birthday: '',
         gender: '',
         terms: false,
