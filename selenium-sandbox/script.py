@@ -9,6 +9,7 @@ import time
 
 options = Options()
 options.add_argument("--start-maximized")
+options.add_argument("user-data-dir=selenium")
 options.add_experimental_option("detach", True)
 
 service = Service(ChromeDriverManager().install())
