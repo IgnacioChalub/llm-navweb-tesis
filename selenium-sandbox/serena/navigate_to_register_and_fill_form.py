@@ -1,5 +1,5 @@
-from Serena import serena_script
-from Serena import Action
+from serena import serena_script
+from serena import Action
 
 def main():
     # Actions to navigate and fill the form
