@@ -13,6 +13,9 @@ class Action:
         self.value = value
         self.element_id = element_id
 
+    def __str__(self):
+        return f'{{"action": "{self.action_type}", "value": "{self.value}", "element_id": "{self.element_id}"}}'
+
     def perform(self, driver):
         if self.action_type == "INPUT":
             input_field = WebDriverWait(driver, 10).until(
