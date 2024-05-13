@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
-from serena.serena import Action
 from openai import OpenAI
 import os
 import json
+from common.action import Action
 
 load_dotenv()
 

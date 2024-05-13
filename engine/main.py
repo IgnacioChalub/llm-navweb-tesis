@@ -6,8 +6,8 @@ def main():
     user_task = "Login with name Juan and password 123hola_123"
 
     actions = run_bicho(user_task)
-    # for action in actions:
-    #     print(action)
+    for action in actions:
+        print(action)
     serena_script(url, actions)
 
 if __name__ == "__main__":
