@@ -6,9 +6,11 @@ import json
 
 load_dotenv()
 
-def load_file_from_same_folder(filename):
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(script_dir, filename)
+def load_file_from_parent_of_root(filename):
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    root_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+    parent_of_root = os.path.abspath(os.path.join(root_dir, os.pardir))
+    file_path = os.path.join(parent_of_root, filename)
     with open(file_path, 'r') as file:
         return file.read()
 
@@ -17,8 +19,7 @@ def run_bicho(user_task) -> list[Action]:
         api_key=os.getenv("OPENAI_API_KEY")
     )
 
-
-    file_text = load_file_from_same_folder("page.tsx")
+    file_text = load_file_from_parent_of_root("next-sandbox/test-app/src/app/(unAuthRoutes)/login/page.tsx")
 
     system_message = f"""
         You are a virtual assistant that creates a list of actions to navigate and use web pages. 
