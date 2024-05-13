@@ -46,6 +46,7 @@ export default function RegisterPage() {
                         placeholder="Email"
                         required
                         className={styles.input}
+                        id='email-register-input'
                     />
                     <input
                         type="text"
@@ -54,6 +55,7 @@ export default function RegisterPage() {
                         placeholder="Username"
                         required
                         className={styles.input}
+                        id='username-register-input'
                     />
                     <input
                         type="password"
@@ -62,8 +64,9 @@ export default function RegisterPage() {
                         placeholder="Password"
                         required
                         className={styles.input}
+                        id='password-register-input'
                     />
-                    <button type="submit" className={styles.button}>Register</button>
+                    <button id='submit-button-id' type="submit" className={styles.button}>Register</button>
                 </form>
             </div>
         </div>

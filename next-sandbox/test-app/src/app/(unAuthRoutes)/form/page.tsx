@@ -31,17 +31,17 @@ const FormPage = () => {
             <div className={styles.card}>
                 <h1>Sample Form</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <input type="text" className={styles.input} name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-                    <input type="number" className={styles.input} name="age" value={formData.age} onChange={handleChange} placeholder="Age" />
-                    <input type="date" className={styles.input} name="birthday" value={formData.birthday} onChange={handleChange} />
+                    <input id='name-form-input' type="text" className={styles.input} name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
+                    <input id='age-form-input' type="number" className={styles.input} name="age" value={formData.age} onChange={handleChange} placeholder="Age" />
+                    <input id='date-form-input' type="date" className={styles.input} name="birthday" value={formData.birthday} onChange={handleChange} />
                     <div>
-                        <input type="radio" className={styles.input} name="gender" value="male" checked={formData.gender === 'male'} onChange={handleChange} /> Male
-                        <input type="radio" className={styles.input} name="gender" value="female" checked={formData.gender === 'female'} onChange={handleChange} /> Female
+                        <input id='male-radio-form-input' type="radio" className={styles.input} name="gender" value="male" checked={formData.gender === 'male'} onChange={handleChange} /> Male
+                        <input id='female-radio-form-input' type="radio" className={styles.input} name="gender" value="female" checked={formData.gender === 'female'} onChange={handleChange} /> Female
                     </div>
                     <div>
-                        <input type="checkbox" className={styles.input} name="terms" checked={formData.terms} onChange={handleChange} /> Agree to terms
+                        <input id='termsAndConditions-checkbox-form-input' type="checkbox" className={styles.input} name="terms" checked={formData.terms} onChange={handleChange} /> Agree to terms
                     </div>
-                    <button type="submit" className={styles.button}>Submit</button>
+                    <button id='submit-button-form-input' type="submit" className={styles.button}>Submit</button>
                 </form>
             </div>
         </div>

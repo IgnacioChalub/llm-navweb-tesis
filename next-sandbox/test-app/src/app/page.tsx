@@ -7,16 +7,16 @@ const Home = () => {
         <div className={styles.container}>
             <h1>Welcome to the App</h1>
             <div className={styles.navigation}>
-                <Link href="/about-next13">
+                <Link href="/about-next13" id='about-next-button'>
                     <p className={styles.link}>About Next.js 13</p>
                 </Link>
-                <Link href="/form">
+                <Link href="/form" id='form-button'>
                     <p className={styles.link}>Form</p>
                 </Link>
-                <Link href="/login">
+                <Link href="/login" id='login-button'>
                     <p className={styles.link}>Login</p>
                 </Link>
-                <Link href="/register">
+                <Link href="/register" id='register-button'>
                     <p className={styles.link}>Register</p>
                 </Link>
             </div>
