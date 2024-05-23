@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/about-next13.module.css';
+import styles from "src/app/styles/about-next13.module.css";
 
 const Page = () => {
     return (

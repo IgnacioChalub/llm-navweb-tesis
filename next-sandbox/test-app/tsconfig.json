@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
+    "baseUrl": "./",
     "jsx": "preserve",
     "lib": [
       "dom",
