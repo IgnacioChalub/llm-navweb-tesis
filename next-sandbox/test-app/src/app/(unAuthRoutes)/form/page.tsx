@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import styles from '../../styles/form.module.css';
+import styles from 'src/app/styles/form.module.css'
 
 
 const FormPage = () => {

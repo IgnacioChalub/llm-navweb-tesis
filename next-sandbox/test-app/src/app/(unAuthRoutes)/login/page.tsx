@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useState, FormEvent } from 'react';
-import styles from '../../styles/form.module.css';
+import styles from 'src/app/styles/form.module.css';
 
 export default function LoginPage() {
     const [username, setUsername] = useState<string>('');
