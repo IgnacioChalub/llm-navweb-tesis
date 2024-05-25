@@ -66,4 +66,6 @@ if __name__ == "__main__":
     duration = 15  # Duration in seconds for the recording
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
+    ## PUEDE SER Q HAYA Q INSTALAR ESTO para la mac brew install ffmpeg
+
     main(duration, openai_api_key)
