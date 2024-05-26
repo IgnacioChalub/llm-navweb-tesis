@@ -6,6 +6,8 @@ def main():
     url = "http://localhost:3000/login"
     user_task = get_text_from_speech()
 
+    print("User task:", user_task)
+
     actions = run_bicho(user_task)
     for action in actions:
         print(action)

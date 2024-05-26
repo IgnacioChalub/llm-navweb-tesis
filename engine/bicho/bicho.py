@@ -30,17 +30,18 @@ def run_bicho(user_task) -> list[Action]:
         - element_id is a string and can be null
         - element_id is the id of the html element or component
         - You are going to receive a nextjs component and you have to return a list of actions to perform the task asked 
+        - Always return a list of actions
         The component code is the following: 
         {file_text}
     """
 
     response = client.chat.completions.create(
-    model="gpt-3.5-turbo-0125",
-    response_format={ "type": "json_object" },
-    messages=[
-        {"role": "system", "content": system_message},
-        {"role": "user", "content": user_task}
-    ]
+        model="gpt-3.5-turbo-0125",
+        response_format={ "type": "json_object" },
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_task}
+        ]
     )
 
     json_response = response.choices[0].message.content

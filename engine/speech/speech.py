@@ -49,7 +49,7 @@ def get_text_from_speech():
     Main function to record audio and transcribe it using the Whisper API.
     """
 
-    duration = 15  # Duration in seconds for the recording
+    duration = 10  # Duration in seconds for the recording
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
     sample_rate = 16000
