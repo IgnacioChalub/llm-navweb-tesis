@@ -30,7 +30,7 @@ def run_bicho(user_task) -> list[Action]:
         - element_id is a string and can be null
         - element_id is the id of the html element or component
         - You are going to receive a nextjs component and you have to return a list of actions to perform the task asked 
-        - Always return a list of actions
+        - The json response should have the key actions and the value should be a list of actions. This value should always be a list even if the list is empty or if it only has one action
         The component code is the following: 
         {file_text}
     """
