@@ -44,10 +44,14 @@ def transcribe_audio_with_whisper_api(audio_file_path, openai_api_key):
 
     return response.json()["text"]
 
-def main(duration, openai_api_key):
+def get_text_from_speech():
     """
     Main function to record audio and transcribe it using the Whisper API.
     """
+
+    duration = 15  # Duration in seconds for the recording
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+
     sample_rate = 16000
     
     # Record audio from the microphone
@@ -59,13 +63,4 @@ def main(duration, openai_api_key):
     # Transcribe the recorded audio using the Whisper API
     transcription = transcribe_audio_with_whisper_api(audio_file_path, openai_api_key)
     
-    # Print the transcription
-    print("Transcription:", transcription)
-
-if __name__ == "__main__":
-    duration = 15  # Duration in seconds for the recording
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-
-    ## PUEDE SER Q HAYA Q INSTALAR ESTO para la mac brew install ffmpeg
-
-    main(duration, openai_api_key)
+    return transcription
