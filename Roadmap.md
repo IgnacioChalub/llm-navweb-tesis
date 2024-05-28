@@ -10,7 +10,7 @@ actions = [
 - Agregar IDs a los ejemplos de next
 
 <!-- DEFINIR ORDEN DE V2 -->
-- El Bicho -> no sabemos que hace, pero algo hace
+- El Bicho
     -  V1
         - Soporta solo una pagina en un componente
     -  V2
