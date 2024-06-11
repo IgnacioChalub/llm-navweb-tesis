@@ -1,10 +1,7 @@
-from dotenv import load_dotenv
 from openai import OpenAI
 import os
 import json
 from common.action import Action
-
-load_dotenv()
 
 def load_file_from_parent_of_root(filename):
     current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -14,9 +11,9 @@ def load_file_from_parent_of_root(filename):
     with open(file_path, 'r') as file:
         return file.read()
 
-def run_bicho(user_task) -> list[Action]:
+def run_bicho(openai_api_key, user_task) -> list[Action]:
     client = OpenAI(
-        api_key=os.getenv("OPENAI_API_KEY")
+        api_key=openai_api_key
     )
 
     file_text = load_file_from_parent_of_root("next-sandbox/test-app/src/app/(unAuthRoutes)/login/page.tsx")
