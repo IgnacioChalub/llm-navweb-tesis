@@ -9,8 +9,9 @@ load_dotenv()
 def main():
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
-    url = "http://localhost:3000/login"
+    url = "http://localhost:3000/"
     user_task = get_text_from_speech(openai_api_key)
+    # user_task = "I want the page to alert Hello! "
 
     print("User task:", user_task)
 

@@ -1,22 +1,20 @@
 from openai import OpenAI
-import os
 import json
 from common.action import Action
-
-def load_file_from_parent_of_root(filename):
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    root_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
-    parent_of_root = os.path.abspath(os.path.join(root_dir, os.pardir))
-    file_path = os.path.join(parent_of_root, filename)
-    with open(file_path, 'r') as file:
-        return file.read()
+from bicho.common import load_file_path_from_parent_of_root
+from bicho.fileParser import get_components
 
 def run_bicho(openai_api_key, user_task) -> list[Action]:
     client = OpenAI(
         api_key=openai_api_key
     )
 
-    file_text = load_file_from_parent_of_root("next-sandbox/test-app/src/app/(unAuthRoutes)/login/page.tsx")
+    entry_file = "next-sandbox/test-app/src/app/page.tsx"
+    base_path = load_file_path_from_parent_of_root("next-sandbox/test-app")
+    file_path = load_file_path_from_parent_of_root(entry_file)
+    components_list = get_components(file_path, base_path)
+
+    file_text = "\n".join(components_list)
 
     system_message = f"""
         You are a virtual assistant that creates a list of actions to navigate and use web pages. 
