@@ -1,7 +1,6 @@
 import sounddevice as sd
 import numpy as np
 import requests
-import os
 
 def record_audio(duration, sample_rate=16000):
     """
@@ -44,14 +43,12 @@ def transcribe_audio_with_whisper_api(audio_file_path, openai_api_key):
 
     return response.json()["text"]
 
-def get_text_from_speech():
+def get_text_from_speech(openai_api_key):
     """
     Main function to record audio and transcribe it using the Whisper API.
     """
 
     duration = 10  # Duration in seconds for the recording
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-
     sample_rate = 16000
     
     # Record audio from the microphone
