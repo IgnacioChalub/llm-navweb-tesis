@@ -25,7 +25,7 @@ def run_bicho(user_task) -> list[Action]:
         You are a virtual assistant that creates a list of actions to navigate and use web pages. 
         - The action response has to be a JSON with 3 keys: action, value, element_id
         - action key is a string
-        - There is only 3 possible acionts INPUT, CLICK-BUTTON, REDIRECT
+        - There is only 3 possible actions INPUT, CLICK-BUTTON, REDIRECT
         - value key is a string and can be null
         - element_id is a string and can be null
         - element_id is the id of the html element or component
