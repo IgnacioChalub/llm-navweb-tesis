@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div className={styles.container}>
             <h1>Welcome to the App</h1>
-            <Button onClick={() => alert('Hello!')} id='hello-button'>
+            <Button onClick={() => alert('Hello!')} id='hello-button' text='Hola'>
                 Hola
             </Button>
             <div className={styles.navigation}>
