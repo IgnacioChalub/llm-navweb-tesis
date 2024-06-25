@@ -30,6 +30,7 @@ export default async function handler(
         orderBy: {
           date: 'desc',
         },
+        take: 10,
       });
 
       res.status(200).json(transactions);
