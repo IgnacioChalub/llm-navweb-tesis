@@ -6,14 +6,18 @@ import {loginUser} from 'src/app/service/login';
 import {Box} from '@mui/material';
 import {FormInput} from 'src/app/components/common/Input/FormInput';
 import {Button} from 'src/app/components/common/Button/Button';
+import {useRouter} from 'next/navigation';
 
 export default function LoginPage() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await loginUser({username, password});
+    await loginUser({username, password}).then(() => {
+      router.push('/dashboard');
+    });
   };
 
   return (
