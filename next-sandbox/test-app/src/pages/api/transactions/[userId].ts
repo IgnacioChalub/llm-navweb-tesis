@@ -27,6 +27,9 @@ export default async function handler(
             },
           },
         },
+        orderBy: {
+          date: 'desc',
+        },
       });
 
       res.status(200).json(transactions);
