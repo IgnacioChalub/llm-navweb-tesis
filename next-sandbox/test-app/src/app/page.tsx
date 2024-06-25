@@ -2,9 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from 'src/app/styles/app.module.css';
-import {Button} from 'src/app/components/common/Button/Button';
 import {Box} from '@mui/material';
-import {SuccessToast} from './components/common/Toast/Toast';
 
 const Home = () => {
   return (

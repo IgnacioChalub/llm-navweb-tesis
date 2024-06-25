@@ -3,7 +3,7 @@ import {Box} from '@mui/material';
 import styles from 'src/app/styles/form.module.css';
 import {FormInput} from 'src/app/components/common/Input/FormInput';
 import {Button} from 'src/app/components/common/Button/Button';
-import {registerUser} from 'src/app/service/Register';
+import {registerUser} from 'src/app/service/register';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');

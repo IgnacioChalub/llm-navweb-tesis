@@ -21,7 +21,6 @@ const FormPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     alert('Form submitted, check the console for data!');
   };
 

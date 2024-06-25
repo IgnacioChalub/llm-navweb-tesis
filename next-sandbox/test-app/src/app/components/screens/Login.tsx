@@ -2,7 +2,7 @@
 import type {FormEvent} from 'react';
 import React, {useState} from 'react';
 import styles from 'src/app/styles/form.module.css';
-import {loginUser} from 'src/app/service/Login';
+import {loginUser} from 'src/app/service/login';
 import {Box} from '@mui/material';
 import {FormInput} from 'src/app/components/common/Input/FormInput';
 import {Button} from 'src/app/components/common/Button/Button';
