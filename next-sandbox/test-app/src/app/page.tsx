@@ -2,16 +2,15 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from 'src/app/styles/app.module.css';
-import {Button} from 'src/app/components/common/button/Button';
+import {Button} from 'src/app/components/common/Button/Button';
+import {Box} from '@mui/material';
+import {SuccessToast} from './components/common/Toast/Toast';
 
 const Home = () => {
   return (
-    <div className={styles.container}>
+    <Box className={styles.container}>
       <h1>Welcome to the App</h1>
-      <Button onClick={() => alert('Hello!')} id='hello-button' text='Hola'>
-        Hola
-      </Button>
-      <div className={styles.navigation}>
+      <Box className={styles.navigation}>
         <Link href='/about-next13' id='about-next-button'>
           <p className={styles.link}>About Next.js 13</p>
         </Link>
@@ -24,8 +23,8 @@ const Home = () => {
         <Link href='/register' id='register-button'>
           <p className={styles.link}>Register</p>
         </Link>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
