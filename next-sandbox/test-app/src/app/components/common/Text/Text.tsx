@@ -1,5 +1,30 @@
-import {formatText} from 'src/app/components/common/utils';
+import {Typography} from '@mui/material';
+import type {SxProps} from '@mui/system';
 
-export const Text = ({children, id}: {children: string; id: string}) => {
-  return <p id={id}>{formatText(children)}</p>;
+interface TextProps {
+  children: string;
+  id?: string;
+  sx?: SxProps;
+  variant:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'subtitle1'
+    | 'subtitle2'
+    | 'body1'
+    | 'body2'
+    | 'caption'
+    | 'button'
+    | 'overline';
+}
+
+export const Text = (props: TextProps) => {
+  return (
+    <Typography variant={props.variant} id={props.id} sx={props.sx}>
+      {props.children}
+    </Typography>
+  );
 };

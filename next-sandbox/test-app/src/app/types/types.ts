@@ -8,3 +8,9 @@ export interface IRegisterBody {
   username: string;
   password: string;
 }
+
+export enum TransactionType {
+  DEPOSIT = 'deposit',
+  WITHDRAWAL = 'withdrawal',
+  TRANSFER = 'transfer',
+}

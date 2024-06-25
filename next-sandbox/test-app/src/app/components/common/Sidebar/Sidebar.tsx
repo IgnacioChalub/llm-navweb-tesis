@@ -7,21 +7,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import SettingsIcon from '@mui/icons-material/Settings';
-import {styled} from '@mui/material/styles';
 import {Grid} from '@mui/material';
-
-const DrawerHeader = styled('div')(({theme}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-}));
+import {DrawerHeader, SidebarElements} from './SidebarElements';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -48,13 +35,7 @@ const Sidebar = () => {
         </IconButton>
       </DrawerHeader>
       <List>
-        {[
-          {text: 'Dashboard', icon: <DashboardIcon />},
-          {text: 'Accounts', icon: <AccountBoxIcon />},
-          {text: 'Transfers', icon: <SwapHorizIcon />},
-          {text: 'Transactions', icon: <ListAltIcon />},
-          {text: 'Settings', icon: <SettingsIcon />},
-        ].map((item, index) => (
+        {SidebarElements.map((item, index) => (
           <ListItem
             button
             key={index}
