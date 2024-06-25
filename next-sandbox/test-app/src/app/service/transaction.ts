@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {ErrorToast, SuccessToast} from '../components/common/Toast/Toast';
-import type {TransactionType} from '../types/types';
+import {ErrorToast, SuccessToast} from 'src/app/components/common/Toast/Toast';
+import type {TransactionType} from 'src/app/types/types';
 
 interface TransactionData {
   userId: number;

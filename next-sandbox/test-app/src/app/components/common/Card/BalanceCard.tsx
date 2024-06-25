@@ -1,6 +1,6 @@
 'use client';
 import useBalanceStore from 'src/app/store/useBalanceStore';
-import CustomCard from './CustomCard';
+import CustomCard from 'src/app/components/common/Card/CustomCard';
 import {useEffect} from 'react';
 import {Skeleton} from '@mui/material';
 

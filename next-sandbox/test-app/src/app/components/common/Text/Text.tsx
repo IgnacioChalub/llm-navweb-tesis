@@ -2,7 +2,7 @@ import {Typography} from '@mui/material';
 import type {SxProps} from '@mui/system';
 
 interface TextProps {
-  children: string;
+  children: string | string[];
   id?: string;
   sx?: SxProps;
   variant:

@@ -11,9 +11,9 @@ import {
   Typography,
 } from '@mui/material';
 import CustomCard from './CustomCard';
-import {performTransaction} from '../../../service/transaction';
-import useBalanceStore from '../../../store/useBalanceStore';
-import {TransactionType} from '../../../types/types';
+import {performTransaction} from 'src/app/service/transaction';
+import useBalanceStore from 'src/app/store/useBalanceStore';
+import {TransactionType} from 'src/app/types/types';
 
 export const QuickActionsCard = ({userId}: {userId: number}) => {
   const [open, setOpen] = useState(false);

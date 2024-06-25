@@ -1,3 +1,4 @@
+'use client';
 import {
   Paper,
   Table,
@@ -7,33 +8,37 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import {Text} from '../Text/Text';
+import {Text} from 'src/app/components/common/Text/Text';
+import {useEffect, useState} from 'react';
+import {getTransactions} from 'src/app/service/getTransactions';
+import {TransactionType} from 'src/app/types/types';
+import {
+  capitalizeFirstLetter,
+  formatCurrency,
+  formatDate,
+  getColor,
+} from 'src/app/components/common/utils';
 
 interface TransactionsTableProps {
-  transactions: {
-    date: string;
-    type: string;
-    amount: number;
-    from: string;
-    to: string;
-  }[];
+  userId: number;
 }
 
-const TransactionsTable = (props: TransactionsTableProps) => {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(amount);
-  };
+type transactions = {
+  date: string;
+  type: string;
+  amount: number;
+  from: string;
+  to: string;
+}[];
 
-  const getColor = (amount: number) => {
-    if (amount < 0) {
-      return 'red';
-    } else {
-      return 'green'; // Green for positive and zero
-    }
-  };
+const TransactionsTable = (props: TransactionsTableProps) => {
+  const [transactions, setTransactions] = useState<transactions>([]);
+
+  useEffect(() => {
+    getTransactions({
+      userId: props.userId,
+    }).then(setTransactions);
+  }, [props.userId]);
 
   return (
     <TableContainer component={Paper} sx={{mb: 4, mt: 4}}>
@@ -48,14 +53,20 @@ const TransactionsTable = (props: TransactionsTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.transactions.map((row, index) => (
+          {transactions.map((row, index) => (
             <TableRow key={index}>
               <TableCell component='th' scope='row'>
-                {row.date}
+                {formatDate(row.date)}
               </TableCell>
-              <TableCell align='left'>{row.type}</TableCell>
               <TableCell align='left'>
-                <Text variant='body2' sx={{color: getColor(row.amount)}}>
+                {capitalizeFirstLetter(row.type)}
+              </TableCell>
+              <TableCell align='left'>
+                <Text
+                  variant='body2'
+                  sx={{color: getColor(row.type, row.amount)}}
+                >
+                  {row.type === TransactionType.WITHDRAWAL ? '-' : '+'}
                   {formatCurrency(row.amount)}
                 </Text>
               </TableCell>

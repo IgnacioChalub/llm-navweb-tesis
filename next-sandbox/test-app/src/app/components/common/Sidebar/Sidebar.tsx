@@ -8,7 +8,10 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Grid} from '@mui/material';
-import {DrawerHeader, SidebarElements} from './SidebarElements';
+import {
+  DrawerHeader,
+  SidebarElements,
+} from 'src/app/components/common/Sidebar/SidebarElements';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
