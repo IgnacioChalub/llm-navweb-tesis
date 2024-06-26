@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "next-auth.d.ts"
+    "next-auth.d.ts",
+    "middleware.ts"
   ],
   "exclude": [
     "node_modules"
