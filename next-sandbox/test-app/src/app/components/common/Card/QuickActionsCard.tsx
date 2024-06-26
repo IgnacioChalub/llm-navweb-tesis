@@ -99,6 +99,7 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
               color: 'black',
               borderColor: 'black',
             }}
+            id='quick-actions-card-transfer-button'
           >
             Transfer
           </Button>
@@ -114,6 +115,7 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
               color: 'black',
               borderColor: 'black',
             }}
+            id='quick-actions-card-deposit-button'
           >
             Deposit
           </Button>
@@ -129,6 +131,7 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
               color: 'black',
               borderColor: 'black',
             }}
+            id='quick-actions-card-withdraw-button'
           >
             Withdraw
           </Button>
@@ -150,7 +153,6 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
           <TextField
             autoFocus
             margin='dense'
-            id='amount'
             label='Amount'
             type='number'
             fullWidth
@@ -158,6 +160,7 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
             value={amount}
             onChange={handleAmountChange}
             error={showError}
+            id='quick-actions-card-amount-input'
           />
           {showError && (
             <Typography color='red' style={{marginTop: 8}}>
@@ -178,8 +181,14 @@ export const QuickActionsCard = (props: QuickActionsCardProps) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleConfirm} disabled={showError}>
+          <Button onClick={handleClose} id='quick-actions-card-cancel-button'>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={showError}
+            id='quick-actions-card-confirm-button'
+          >
             Confirm
           </Button>
         </DialogActions>

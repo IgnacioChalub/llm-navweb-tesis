@@ -1,3 +1,12 @@
+import sys
+import os
+
+# Add the parent directory of 'common' to the sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+sys.path.append(parent_dir)
+
+from common.action import Action
 from typing import List
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -7,7 +16,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-from common.action import Action
 
 
 def perform(action: Action, driver):

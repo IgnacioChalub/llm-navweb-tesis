@@ -1,0 +1,5 @@
+ids = component name - element name - component id
+        // component name is the name of the component that the element belongs to
+        // element name is the name of the element
+        // component id is the id of the component
+        // example: quick-actions-card-transfer-button
