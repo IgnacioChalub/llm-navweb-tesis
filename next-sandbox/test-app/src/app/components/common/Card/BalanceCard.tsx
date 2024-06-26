@@ -4,18 +4,23 @@ import CustomCard from 'src/app/components/common/Card/CustomCard';
 import {useEffect} from 'react';
 import {Skeleton} from '@mui/material';
 
-export const BalanceCard = ({userId}: {userId: number}) => {
+interface BalanceCardProps {
+  userId: number;
+  id?: string;
+}
+
+export const BalanceCard = (props: BalanceCardProps) => {
   const {balance, loading, error, fetchBalance, balanceFetched} =
     useBalanceStore();
 
   useEffect(() => {
     if (!balanceFetched) {
-      fetchBalance(userId);
+      fetchBalance(props.userId);
     }
-  }, [userId, fetchBalance, balanceFetched]);
+  }, [props.userId, fetchBalance, balanceFetched]);
 
   return (
-    <CustomCard title='Account Balance'>
+    <CustomCard title='Account Balance' id={props.id}>
       {loading ? (
         <Skeleton />
       ) : error ? (

@@ -14,8 +14,16 @@ import CustomCard from './CustomCard';
 import {performTransaction} from 'src/app/service/transaction';
 import useBalanceStore from 'src/app/store/useBalanceStore';
 import {TransactionType} from 'src/app/types/types';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import SyncAltIcon from '@mui/icons-material/SyncAlt';
 
-export const QuickActionsCard = ({userId}: {userId: number}) => {
+interface QuickActionsCardProps {
+  userId: number;
+  id?: string;
+}
+
+export const QuickActionsCard = (props: QuickActionsCardProps) => {
   const [open, setOpen] = useState(false);
   const [actionType, setActionType] = useState<
     | TransactionType.DEPOSIT
@@ -52,7 +60,7 @@ export const QuickActionsCard = ({userId}: {userId: number}) => {
     }
 
     performTransaction({
-      userId,
+      userId: props.userId,
       type: actionType as TransactionType,
       amount: parseFloat(amount),
       recipientId: recipient,
@@ -78,30 +86,51 @@ export const QuickActionsCard = ({userId}: {userId: number}) => {
   };
 
   return (
-    <CustomCard title='Quick Actions'>
+    <CustomCard title='Quick Actions' id={props.id}>
       <Grid container spacing={2} justifyContent='center'>
-        <Grid item>
+        <Grid item xs={12}>
           <Button
             variant='outlined'
+            startIcon={<SyncAltIcon />}
+            onClick={() => handleClickOpen(TransactionType.TRANSFER)}
+            sx={{
+              justifyContent: 'flex-start',
+              width: '100%',
+              color: 'black',
+              borderColor: 'black',
+            }}
+          >
+            Transfer
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant='outlined'
+            startIcon={<ArrowUpwardIcon />}
             onClick={() => handleClickOpen(TransactionType.DEPOSIT)}
+            sx={{
+              justifyContent: 'flex-start',
+              width: '100%',
+              color: 'black',
+              borderColor: 'black',
+            }}
           >
             Deposit
           </Button>
         </Grid>
-        <Grid item>
+        <Grid item xs={12}>
           <Button
             variant='outlined'
+            startIcon={<ArrowDownwardIcon />}
             onClick={() => handleClickOpen(TransactionType.WITHDRAWAL)}
+            sx={{
+              justifyContent: 'flex-start',
+              width: '100%',
+              color: 'black',
+              borderColor: 'black',
+            }}
           >
             Withdraw
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant='outlined'
-            onClick={() => handleClickOpen(TransactionType.TRANSFER)}
-          >
-            Transfer
           </Button>
         </Grid>
       </Grid>
@@ -110,7 +139,7 @@ export const QuickActionsCard = ({userId}: {userId: number}) => {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            minWidth: '20%',
+            minWidth: '25%',
             maxWidth: '90%',
             width: 'auto',
           },

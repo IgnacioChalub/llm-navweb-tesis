@@ -25,21 +25,21 @@ export default function LoginPage() {
       <Box className={styles.card}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <FormInput
-            id='username-input-id'
+            id='login-username-input'
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder='Username'
           />
           <FormInput
-            id='password-input-id'
+            id='login-password-input'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
           />
           <Button
-            id='submit-login-id'
+            id='login-button-submit'
             type='submit'
             disabled={!username || !password}
           >

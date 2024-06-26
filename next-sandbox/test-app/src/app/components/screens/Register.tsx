@@ -20,28 +20,28 @@ export const RegisterPage = () => {
       <Box className={styles.card}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <FormInput
-            id='email-register-input'
+            id='register-email-input'
             type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Email'
           />
           <FormInput
-            id='username-register-input'
+            id='register-username-input'
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder='Username'
           />
           <FormInput
-            id='password-register-input'
+            id='register-password-input'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
           />
           <Button
-            id='submit-button-id'
+            id='register-button-submit'
             type='submit'
             disabled={!username || !password}
           >

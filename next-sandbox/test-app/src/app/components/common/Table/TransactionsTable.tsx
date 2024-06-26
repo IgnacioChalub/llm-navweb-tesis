@@ -21,6 +21,7 @@ import {
 
 interface TransactionsTableProps {
   userId: number;
+  id?: string;
 }
 
 type transactions = {
@@ -41,7 +42,7 @@ const TransactionsTable = (props: TransactionsTableProps) => {
   }, [props.userId]);
 
   return (
-    <TableContainer component={Paper} sx={{mb: 4, mt: 4}}>
+    <TableContainer component={Paper} sx={{mb: 4, mt: 4}} id={props.id}>
       <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
