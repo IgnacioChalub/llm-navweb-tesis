@@ -48,7 +48,7 @@ def get_text_from_speech(openai_api_key):
     Main function to record audio and transcribe it using the Whisper API.
     """
 
-    duration = 10  # Duration in seconds for the recording
+    duration = 4  # Duration in seconds for the recording
     sample_rate = 16000
     
     # Record audio from the microphone

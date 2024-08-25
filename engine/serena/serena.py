@@ -12,9 +12,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 
@@ -35,17 +33,20 @@ def perform(action: Action, driver):
 
 
 def setup_driver():
+    # In case of error install: brew install chromedriver and then allow permissions
+    # https://stackoverflow.com/questions/69315805/chromedriver-can-t-be-opened-because-apple-cannot-check-it-for-malicious-softwar
     options = Options()
     options.add_argument("--start-maximized")
     options.add_experimental_option("detach", True)
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+    # service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=None, options=options)
     return driver
 
 
 def perform_actions(driver, actions: List[Action]):
     for action in actions:
         perform(action, driver)
+        time.sleep(4)
 
 
 def serena_script(url: str, actions: List[Action]):

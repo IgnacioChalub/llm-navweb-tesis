@@ -9,7 +9,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
         api_key=openai_api_key
     )
 
-    entry_file = "next-sandbox/test-app/src/app/page.tsx"
+    entry_file = "next-sandbox/test-app/src/app/(authRoutes)/dashboard/page.tsx"
     base_path = load_file_path_from_parent_of_root("next-sandbox/test-app")
     file_path = load_file_path_from_parent_of_root(entry_file)
     components_list = get_components(file_path, base_path)
