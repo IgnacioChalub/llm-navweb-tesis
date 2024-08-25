@@ -4,15 +4,19 @@ import styles from 'src/app/styles/form.module.css';
 import {FormInput} from 'src/app/components/common/Input/FormInput';
 import {Button} from 'src/app/components/common/Button/Button';
 import {registerUser} from 'src/app/service/register';
+import {useRouter} from 'next/navigation';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const {push} = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await registerUser({email, username, password});
+    await registerUser({email, username, password}).then(() => {
+      push('/login');
+    });
   };
 
   return (
