@@ -1,6 +1,7 @@
 import os
 import re
-from common import load_file_path_from_parent_of_root
+from bicho.common import load_file_path_from_parent_of_root
+
 
 def collect_import_lines(file_path):
     import_lines = []
