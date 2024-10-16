@@ -7,13 +7,14 @@ from sympy.physics.units import action
 from common.action import Action
 from bicho.common import load_file_path_from_parent_of_root
 from bicho.fileParser import get_components
+from common.find_page_by_url import find_page_tsx
 
-def run_bicho(openai_api_key, user_task) -> list[Action]:
+
+def run_bicho(openai_api_key, user_task, repo_path, entry_file) -> list[Action]:
     client = OpenAI(
         api_key=openai_api_key
     )
 
-    entry_file = "next-sandbox/test-app/src/app/(unAuthRoutes)/login/page.tsx"
     components_list = resolve_components(entry_file)
 
     file_text = "\n".join(components_list)
@@ -26,6 +27,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
         - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
         - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
         - If redirect is to the same page the user is currently on, don't set is_redirect to true
+        - If is_redirect equals to True, the value should represent the path we are navigating 
         - value key is a string and can be null
         - element_id is a string and can be null
         - element_id is the id of the html element or component
@@ -46,7 +48,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
     exit_loop = false
     while not exit_loop:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4-turbo",
             response_format={"type": "json_object"},
             messages=current_chat
         )
@@ -54,17 +56,15 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
         current_chat.append({"role": "assistant", "content": json_response})
 
         data = json.loads(json_response)
-        new_action = Action(data["action"], data.get("value", None), data["element_id"], data["is_redirect"],
-                            data["last"])
+        new_action = Action(data["action"], data.get("value", None), data["element_id"], data["is_redirect"], data["last"])
         actions.append(new_action)
         print(new_action)
 
+        # If it's last action there is no need to check for redirect
         if new_action.last is True:
             exit_loop = True
-
-        if new_action.is_redirect is True:
-            # Todo resolve page path with url redirect vale
-            dashboard_page_path = "next-sandbox/test-app/src/app/(authRoutes)/dashboard/page.tsx"
+        elif new_action.is_redirect is True:
+            dashboard_page_path = find_page_tsx(repo_path, new_action.value)
             dashboard_components_list = resolve_components(dashboard_page_path)
 
             new_file_text = "\n".join(dashboard_components_list)
@@ -77,6 +77,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
                     - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
                     - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
                     - If redirect is to the same page the user is currently on, don't set is_redirect to true
+                    - If is_redirect equals to True, the value should represent the path we are navigating 
                     - value key is a string and can be null
                     - element_id is a string and can be null
                     - element_id is the id of the html element or component
@@ -88,8 +89,6 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
                     {new_file_text}
                 """
             current_chat.append({"role": "system", "content": new_system_message})
-
-
 
     return actions
 
