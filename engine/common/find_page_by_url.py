@@ -1,6 +1,8 @@
 import os
 from urllib.parse import urlparse
 
+from bicho.common import load_file_path_from_parent_of_root
+
 
 def find_page_tsx(repository_path, url):
     """
@@ -12,7 +14,7 @@ def find_page_tsx(repository_path, url):
         url (str): The URL path to resolve.
 
     Returns:
-        str or None: The absolute path to the page.tsx file corresponding to the URL,
+        str or None: The relative path to the page.tsx file corresponding to the URL,
                      or None if not found.
     """
     # Parse the URL to extract the path
@@ -22,7 +24,7 @@ def find_page_tsx(repository_path, url):
     segments = [segment for segment in path.strip('/').split('/') if segment]
 
     # Define the starting directory (commonly 'app' in Next.js 13)
-    app_dir = os.path.join(repository_path, 'app')
+    app_dir = os.path.join(repository_path + '/src', 'app')
     if not os.path.isdir(app_dir):
         raise FileNotFoundError(f"'app' directory not found in {repository_path}")
 
@@ -35,7 +37,7 @@ def find_page_tsx(repository_path, url):
             remaining_segments (list of str): The list of remaining path segments to match.
 
         Returns:
-            str or None: The absolute path to the page.tsx file if found, else None.
+            str or None: The relative path to the page.tsx file if found, else None.
         """
         # If no more segments to match, look for 'page.tsx' or 'index.tsx' in current_dir
         if not remaining_segments:
@@ -92,13 +94,17 @@ def find_page_tsx(repository_path, url):
         for filename in ['page.tsx', 'index.tsx']:
             candidate = os.path.join(app_dir, filename)
             if os.path.isfile(candidate):
-                return os.path.abspath(candidate)
+                page_tsx = os.path.abspath(candidate)
 
-    return page_tsx  # May be None if no matching page.tsx is found
+    if page_tsx:
+        # Only return the path after /next-sandbox
+        return page_tsx.split("/llm-navweb-tesis", 1)[-1]
+
+    return None  # May be None if no matching page.tsx is found
 
 if __name__ == '__main__':
     # Example repository path
-    repo_path = "/Users/beltranbulbarella/WebstormProjects/llm-navweb-tesis/next-sandbox/test-app/src"
+    repo_path = load_file_path_from_parent_of_root("next-sandbox/test-app")
 
     # Example URLs
     urls = [
