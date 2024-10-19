@@ -1,20 +1,16 @@
 from openai import OpenAI
 import json
-
-from sympy import false
-from sympy.physics.units import action
-
 from common.action import Action
-from bicho.common import load_file_path_from_parent_of_root
 from bicho.fileParser import get_components
+from common.find_page_by_url import find_page_tsx
 
-def run_bicho(openai_api_key, user_task) -> list[Action]:
+
+def run_bicho(openai_api_key, user_task, repo_path, entry_file_path) -> list[Action]:
     client = OpenAI(
         api_key=openai_api_key
     )
 
-    entry_file = "next-sandbox/test-app/src/app/(unAuthRoutes)/login/page.tsx"
-    components_list = resolve_components(entry_file)
+    components_list = resolve_components(entry_file_path, repo_path)
 
     file_text = "\n".join(components_list)
 
@@ -26,6 +22,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
         - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
         - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
         - If redirect is to the same page the user is currently on, don't set is_redirect to true
+        - If is_redirect is True, the value should be the url where the redirect is been done
         - value key is a string and can be null
         - element_id is a string and can be null
         - element_id is the id of the html element or component
@@ -43,10 +40,10 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
     ]
     actions = []
 
-    exit_loop = false
+    exit_loop = False
     while not exit_loop:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             response_format={"type": "json_object"},
             messages=current_chat
         )
@@ -63,9 +60,8 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
             exit_loop = True
 
         if new_action.is_redirect is True:
-            # Todo resolve page path with url redirect vale
-            dashboard_page_path = "next-sandbox/test-app/src/app/(authRoutes)/dashboard/page.tsx"
-            dashboard_components_list = resolve_components(dashboard_page_path)
+            new_page_path = find_page_tsx(repo_path, new_action.value)
+            dashboard_components_list = resolve_components(new_page_path, repo_path)
 
             new_file_text = "\n".join(dashboard_components_list)
             new_system_message = f"""
@@ -77,6 +73,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
                     - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
                     - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
                     - If redirect is to the same page the user is currently on, don't set is_redirect to true
+                    - If is_redirect is True, the value should be the url where the redirect is been done
                     - value key is a string and can be null
                     - element_id is a string and can be null
                     - element_id is the id of the html element or component
@@ -93,8 +90,7 @@ def run_bicho(openai_api_key, user_task) -> list[Action]:
 
     return actions
 
-def resolve_components(entry_file):
-    base_path = load_file_path_from_parent_of_root("next-sandbox/test-app")
-    file_path = load_file_path_from_parent_of_root(entry_file)
-    components_list = get_components(file_path, base_path)
+def resolve_components(entry_file_path, repo_path):
+    file_path = repo_path + entry_file_path
+    components_list = get_components(file_path, repo_path)
     return components_list
