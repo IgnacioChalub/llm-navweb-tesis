@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0070f3;
+}
+
+.buttons button {
+    margin-left: 1rem;
+}
+
+.login {
+    background-color: #fff;
+    color: #000;
+    &:hover {
+        background-color: #f3f1f1;
+    }
+}
+
+.register {
+    background-color: #000;
+    color: #fff;
+
+    &:hover {
+        background-color: #323131;
+    }
+}

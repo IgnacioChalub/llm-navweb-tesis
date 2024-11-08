@@ -13,6 +13,7 @@ interface buttonProps {
   type?: 'submit';
   sx?: SxProps;
   loading?: boolean;
+  className?: string;
 }
 
 export const Button = (props: buttonProps) => {
@@ -24,18 +25,8 @@ export const Button = (props: buttonProps) => {
       color={props.color}
       size={props.size}
       type={props.type}
-      sx={{
-        backgroundColor: '#0070f3',
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        fontSize: '1rem',
-        '&:hover': {
-          backgroundColor: '#0070f3',
-        },
-      }}
       onClick={props.onClick}
+      className={props.className}
     >
       {props.children}
     </MUIButton>
