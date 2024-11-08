@@ -1,11 +1,13 @@
-import type {MouseEvent, ReactNode} from 'react';
+import type {FC, FormEvent, MouseEvent, ReactNode} from 'react';
 import type {SxProps} from '@mui/system';
 import {Button as MUIButton} from '@mui/material';
 
 interface buttonProps {
   id: string;
   children: ReactNode;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (
+    event: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>,
+  ) => void;
   disabled?: boolean;
   variant?: 'contained' | 'text' | 'outlined';
   color?: 'error' | 'primary' | 'inherit';
@@ -14,6 +16,7 @@ interface buttonProps {
   sx?: SxProps;
   loading?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 export const Button = (props: buttonProps) => {
@@ -27,8 +30,48 @@ export const Button = (props: buttonProps) => {
       type={props.type}
       onClick={props.onClick}
       className={props.className}
+      fullWidth={props.fullWidth}
+      sx={props.sx}
     >
       {props.children}
     </MUIButton>
   );
 };
+
+export const LoginButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
+  props,
+) => (
+  <Button
+    {...props}
+    id={`login-button ${props.id}`}
+    variant='contained'
+    color='inherit'
+    sx={{
+      backgroundColor: '#fff',
+      color: '#000',
+      '&:hover': {
+        backgroundColor: '#f3f1f1',
+      },
+      ...props.sx,
+    }}
+  />
+);
+
+export const RegisterButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
+  props,
+) => (
+  <Button
+    {...props}
+    id={`register-button ${props.id}`}
+    variant='contained'
+    color='primary'
+    sx={{
+      backgroundColor: '#000',
+      color: '#fff',
+      '&:hover': {
+        backgroundColor: '#323131',
+      },
+      ...props.sx,
+    }}
+  />
+);

@@ -4,19 +4,13 @@ import styles from 'src/app/styles/landing/featureCards.module.css';
 interface FeatureCardProps {
   title: string;
   description: string;
-  children?: React.ReactNode;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({
-  title,
-  description,
-  children,
-}) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({title, description}) => {
   return (
     <div className={styles.card}>
       <h3>{title}</h3>
       <p>{description}</p>
-      {children}
     </div>
   );
 };

@@ -13,20 +13,3 @@
 .buttons button {
     margin-left: 1rem;
 }
-
-.login {
-    background-color: #fff;
-    color: #000;
-    &:hover {
-        background-color: #f3f1f1;
-    }
-}
-
-.register {
-    background-color: #000;
-    color: #fff;
-
-    &:hover {
-        background-color: #323131;
-    }
-}
