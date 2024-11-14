@@ -1,33 +1,31 @@
 'use client';
-import useBalanceStore from 'src/app/store/useBalanceStore';
-import CustomCard from 'src/app/components/common/Card/CustomCard';
+import {Card, CardContent, Grid, Typography} from '@mui/material';
+import useBalanceStore from '../../../store/useBalanceStore';
+import useUserStore from '../../../store/useUserStore';
 import {useEffect} from 'react';
-import {Skeleton} from '@mui/material';
 
-interface BalanceCardProps {
-  userId: number;
-  id?: string;
-}
-
-export const BalanceCard = (props: BalanceCardProps) => {
-  const {balance, loading, error, fetchBalance, balanceFetched} =
-    useBalanceStore();
+export const BalanceCard = () => {
+  const {balance, fetchBalance, balanceFetched} = useBalanceStore();
+  const {user, userFetched, fetchUser} = useUserStore();
 
   useEffect(() => {
-    if (!balanceFetched) {
-      fetchBalance(props.userId);
+    if (!userFetched) {
+      fetchUser();
     }
-  }, [props.userId, fetchBalance, balanceFetched]);
-
+    if (user && !balanceFetched) {
+      fetchBalance(user.id);
+    }
+  }, [user, userFetched, balanceFetched]);
   return (
-    <CustomCard title='Account Balance' id={props.id}>
-      {loading ? (
-        <Skeleton />
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <p>{balance ? `$${balance.toFixed(2)}` : '$0'}</p>
-      )}
-    </CustomCard>
+    <Grid item xs={12} md={6}>
+      <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
+        <CardContent>
+          <Typography variant='h6'>Account Balance</Typography>
+          <Typography variant='h3' fontWeight='bold'>
+            ${balance?.toFixed(2) || '0.00'}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };

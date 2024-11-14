@@ -14,3 +14,9 @@ export enum TransactionType {
   WITHDRAWAL = 'withdrawal',
   TRANSFER = 'transfer',
 }
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+}

@@ -5,7 +5,7 @@ interface BalanceState {
   balance: number | null;
   loading: boolean;
   error: string | null;
-  fetchBalance: (userId: number) => void;
+  fetchBalance: (userId: string) => void;
   balanceFetched: boolean; // Ensure this flag exists
   setBalanceFetched: (value: boolean) => void; // Function to update the fetched state
 }

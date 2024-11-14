@@ -7,9 +7,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
-import {Text} from 'src/app/components/common/Text/Text';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getTransactions} from 'src/app/service/getTransactions';
 import {TransactionType} from 'src/app/types/types';
 import {
@@ -63,13 +63,13 @@ const TransactionsTable = (props: TransactionsTableProps) => {
                 {capitalizeFirstLetter(row.type)}
               </TableCell>
               <TableCell align='left'>
-                <Text
+                <Typography
                   variant='body2'
                   sx={{color: getColor(row.type, row.amount)}}
                 >
                   {row.type === TransactionType.WITHDRAWAL ? '-' : '+'}
                   {formatCurrency(row.amount)}
-                </Text>
+                </Typography>
               </TableCell>
               <TableCell align='left'>{row.from}</TableCell>
               <TableCell align='left'>{row.to}</TableCell>
