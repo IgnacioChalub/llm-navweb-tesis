@@ -3,7 +3,7 @@ import axios from 'axios';
 
 interface BalanceState {
   balance: number | null;
-  loading: boolean;
+  balanceLoading: boolean;
   error: string | null;
   fetchBalance: (userId: string) => void;
   balanceFetched: boolean; // Ensure this flag exists
@@ -12,24 +12,24 @@ interface BalanceState {
 
 const useBalanceStore = create<BalanceState>((set) => ({
   balance: null,
-  loading: false,
+  balanceLoading: false,
   error: null,
   balanceFetched: false,
   setBalanceFetched: (value) => set({balanceFetched: value}),
 
   fetchBalance: async (userId) => {
-    set({loading: true, error: null});
+    set({balanceLoading: true, error: null});
     try {
       const response = await axios.get(`/api/balance/${userId}`);
       set({
         balance: response.data.balance,
-        loading: false,
+        balanceLoading: false,
         balanceFetched: true,
       });
     } catch (error) {
       set({
         error: error.response?.data?.error || 'Failed to fetch balance',
-        loading: false,
+        balanceLoading: false,
         balance: null,
       });
     }

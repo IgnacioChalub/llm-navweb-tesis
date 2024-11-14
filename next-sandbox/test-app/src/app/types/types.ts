@@ -20,3 +20,16 @@ export interface User {
   username: string;
   email: string;
 }
+
+export interface Transaction {
+  id: number;
+  date: string;
+  type: 'deposit' | 'withdrawal' | 'transfer';
+  amount: number;
+  sender?: {
+    username: string;
+  };
+  recipient?: {
+    username: string;
+  };
+}

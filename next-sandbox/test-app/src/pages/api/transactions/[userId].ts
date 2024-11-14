@@ -11,19 +11,30 @@ export default async function handler(
 
   if (req.method === 'GET') {
     try {
+      // Validate userId
+      const parsedUserId = parseInt(userId as string, 10);
+      if (isNaN(parsedUserId)) {
+        return res.status(400).json({error: 'Invalid user ID'});
+      }
+
       // Retrieve transactions for the user
       const transactions = await prisma.transaction.findMany({
         where: {
-          userId: parseInt(userId as string),
+          OR: [{senderId: parsedUserId}, {recipientId: parsedUserId}],
         },
         select: {
           id: true,
           date: true,
           type: true,
           amount: true,
-          user: {
+          sender: {
             select: {
-              username: true, // Assuming you want to show the username
+              username: true,
+            },
+          },
+          recipient: {
+            select: {
+              username: true,
             },
           },
         },

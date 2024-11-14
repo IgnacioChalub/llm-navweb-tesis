@@ -1,28 +1,28 @@
-'use client';
-import {Card, CardContent, Grid, Typography} from '@mui/material';
-import useBalanceStore from '../../../store/useBalanceStore';
-import useUserStore from '../../../store/useUserStore';
-import {useEffect} from 'react';
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography,
+} from '@mui/material';
 
-export const BalanceCard = () => {
-  const {balance, fetchBalance, balanceFetched} = useBalanceStore();
-  const {user, userFetched, fetchUser} = useUserStore();
+interface BalanceCardProps {
+  balance: number;
+  loading: boolean;
+}
 
-  useEffect(() => {
-    if (!userFetched) {
-      fetchUser();
-    }
-    if (user && !balanceFetched) {
-      fetchBalance(user.id);
-    }
-  }, [user, userFetched, balanceFetched]);
+export const BalanceCard = (props: BalanceCardProps) => {
   return (
     <Grid item xs={12} md={6}>
       <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
         <CardContent>
-          <Typography variant='h6'>Account Balance</Typography>
+          <Typography variant='h5'>Account Balance</Typography>
           <Typography variant='h3' fontWeight='bold'>
-            ${balance?.toFixed(2) || '0.00'}
+            {props.loading ? (
+              <CircularProgress />
+            ) : (
+              props.balance?.toFixed(2) || '0.00'
+            )}
           </Typography>
         </CardContent>
       </Card>

@@ -1,20 +1,50 @@
-import {Box, Card, CardContent, Grid, Typography} from '@mui/material';
+'use client';
+import {Box, Grid, Typography} from '@mui/material';
 import QuickActions from '../common/Card/QuickActions';
 import {BalanceCard} from '../common/Card/BalanceCard';
+import TransactionsTable from '../common/Table/TransactionsTable';
+import useBalanceStore from '../../store/useBalanceStore';
+import useUserStore from '../../store/useUserStore';
+import {useEffect} from 'react';
+import useTransactionStore from '../../store/useTransactionStore';
 
 const Dashboard = () => {
+  const {balance, fetchBalance, balanceFetched, balanceLoading} =
+    useBalanceStore();
+  const {user, userFetched, fetchUser} = useUserStore();
+  const {
+    transactions,
+    transactionsLoading,
+    fetchTransactions,
+    transactionsFetched,
+  } = useTransactionStore();
+
+  useEffect(() => {
+    if (!userFetched) {
+      fetchUser();
+    }
+    if (userFetched && !balanceFetched) {
+      fetchBalance(user.id);
+    }
+    if (userFetched && !transactionsFetched) {
+      fetchTransactions(user.id);
+    }
+  }, [user, userFetched, balanceFetched, transactionsFetched]);
+
   return (
     <Box
       sx={{display: 'flex', flexDirection: 'row', padding: '2rem', gap: '2rem'}}
     >
       <Box sx={{flexGrow: 1}}>
         <Typography variant='h4' gutterBottom>
-          Welcome, John Doe
+          {user.username}&apos;s Dashboard
         </Typography>
         <Grid container spacing={2}>
           {/* Account Balance */}
-          <BalanceCard />
-
+          <BalanceCard
+            balance={balance || 0}
+            loading={balanceLoading || transactionsLoading}
+          />
           {/* Quick Actions */}
           <Grid item xs={12} md={6}>
             <QuickActions />
@@ -23,42 +53,10 @@ const Dashboard = () => {
 
         {/* Recent Transactions */}
         <Box sx={{marginTop: '2rem'}}>
-          <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
-            <CardContent>
-              <Typography variant='h6' gutterBottom>
-                Recent Transactions
-              </Typography>
-              <Box sx={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                  <Typography
-                    sx={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}
-                  >
-                    <span style={{color: 'green'}}>⬆</span> Deposit
-                  </Typography>
-                  <Typography sx={{color: 'green'}}>$1000.00</Typography>
-                  <Typography>2023-04-01</Typography>
-                </Box>
-                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                  <Typography
-                    sx={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}
-                  >
-                    <span style={{color: 'red'}}>⬇</span> Withdrawal
-                  </Typography>
-                  <Typography sx={{color: 'red'}}>$50.00</Typography>
-                  <Typography>2023-04-02</Typography>
-                </Box>
-                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                  <Typography
-                    sx={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}
-                  >
-                    <span style={{color: 'blue'}}>📤</span> Transfer
-                  </Typography>
-                  <Typography sx={{color: 'blue'}}>$200.00</Typography>
-                  <Typography>2023-04-03</Typography>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
+          <TransactionsTable
+            transactions={transactions}
+            loading={balanceLoading || transactionsLoading}
+          />
         </Box>
       </Box>
     </Box>

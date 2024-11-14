@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 import {Button} from '../Button/Button';
 import {TransactionType} from '../../../types/types';
-import axios from 'axios';
 import useUserStore from '../../../store/useUserStore';
 import {ErrorToast, SuccessToast} from '../Toast/Toast';
+import useTransactionStore from '../../../store/useTransactionStore';
 import useBalanceStore from '../../../store/useBalanceStore';
 
 const QuickActions: React.FC = () => {
@@ -25,6 +25,7 @@ const QuickActions: React.FC = () => {
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
   const {user} = useUserStore();
+  const {createTransaction} = useTransactionStore();
   const {setBalanceFetched} = useBalanceStore();
 
   const handleTabChange = (
@@ -38,20 +39,24 @@ const QuickActions: React.FC = () => {
 
   const handleSubmit = async () => {
     const requestData = {
-      type: action.toLowerCase(),
+      type: action,
       amount: parseFloat(amount),
       ...(action === TransactionType.TRANSFER && {recipientId: recipient}),
     };
 
     try {
-      const response = await axios.post(
-        `/api/transaction/${user.id}`,
-        requestData,
+      await createTransaction(
+        user.id,
+        requestData.type,
+        requestData.amount,
+        requestData.recipientId || '',
       );
-      SuccessToast('Transaction successful');
       setBalanceFetched(false);
+      setAmount('');
+      setRecipient('');
+      SuccessToast('Transaction created successfully');
     } catch {
-      ErrorToast('An error occurred during the transaction');
+      ErrorToast('Failed to create transaction');
     }
   };
 
@@ -98,13 +103,13 @@ const QuickActions: React.FC = () => {
                 onChange={(event) => setRecipient(event.target.value)}
                 fullWidth
               >
-                <MenuItem id='beltran-bulbarella' value='19'>
+                <MenuItem id='beltran-bulbarella' value='1'>
                   Beltran Bulbarella
                 </MenuItem>
-                <MenuItem id='ignacio-berdiñas' value='19'>
+                <MenuItem id='ignacio-berdiñas' value='2'>
                   Ignacio Berdiñas
                 </MenuItem>
-                <MenuItem id='ignacio-chalub' value='19'>
+                <MenuItem id='ignacio-chalub' value='3'>
                   Ignacio Chalub
                 </MenuItem>
               </Select>
