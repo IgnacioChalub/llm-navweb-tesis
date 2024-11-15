@@ -83,9 +83,21 @@ const QuickActions: React.FC = () => {
           variant='fullWidth'
           sx={{marginBottom: '1rem'}}
         >
-          <Tab label='Transfer' value={TransactionType.TRANSFER} />
-          <Tab label='Deposit' value={TransactionType.DEPOSIT} />
-          <Tab label='Withdraw' value={TransactionType.WITHDRAWAL} />
+          <Tab
+            label='Transfer'
+            value={TransactionType.TRANSFER}
+            id='transfer-tab'
+          />
+          <Tab
+            label='Deposit'
+            value={TransactionType.DEPOSIT}
+            id='deposit-tab'
+          />
+          <Tab
+            label='Withdraw'
+            value={TransactionType.WITHDRAWAL}
+            id='withdraw-tab'
+          />
         </Tabs>
 
         <Box
@@ -99,6 +111,7 @@ const QuickActions: React.FC = () => {
             onChange={(e) => setAmount(e.target.value)}
             placeholder='Enter amount'
             fullWidth
+            id='amount-input'
           />
 
           {action === TransactionType.TRANSFER && (

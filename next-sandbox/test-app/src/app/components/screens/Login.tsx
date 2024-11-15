@@ -60,6 +60,7 @@ export default function LoginPage() {
           <Typography variant='body1' mt='2rem'>
             Don&apos;t have an account?{' '}
             <a
+              id='login-register-link'
               href='/register'
               style={{
                 color: 'rgb(54,98,227)',

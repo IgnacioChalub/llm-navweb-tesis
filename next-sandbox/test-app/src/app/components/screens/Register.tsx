@@ -68,6 +68,7 @@ export const RegisterPage = () => {
           <Typography variant='body1' mt='2rem'>
             Already have an account?{' '}
             <a
+              id='register-login-link'
               href='/login'
               style={{
                 color: 'rgb(54,98,227)',
