@@ -1,4 +1,3 @@
-'use client';
 import {
   Card,
   CardContent,
@@ -27,7 +26,9 @@ const TransactionsTable = (props: TransactionsTableProps) => {
   return (
     <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
       <CardContent>
-        <Typography variant='h5'>Recent Transactions</Typography>
+        <Typography variant='h5' sx={{mb: 2}}>
+          Recent Transactions
+        </Typography>
         <Table>
           <TableBody>
             {props.transactions.map((transaction) => (

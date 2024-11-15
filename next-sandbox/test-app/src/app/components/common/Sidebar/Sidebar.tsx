@@ -1,73 +1,81 @@
-'use client';
-import {useState} from 'react';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import {Grid} from '@mui/material';
 import {
-  DrawerHeader,
-  SidebarElements,
-} from 'src/app/components/common/Sidebar/SidebarElements';
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import SavingsIcon from '@mui/icons-material/Savings';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HomeIcon from '@mui/icons-material/Home';
+import {CreditCard} from '@mui/icons-material';
 
 const Sidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const drawerWidth = isSidebarOpen ? '15vw' : '8vw';
-
   return (
     <Drawer
-      variant='permanent'
-      anchor='left'
-      open={isSidebarOpen}
+      variant='persistent'
+      open
       sx={{
-        width: drawerWidth,
+        width: 240,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
+        [`& .MuiDrawer-paper`]: {
+          width: 240,
           boxSizing: 'border-box',
         },
       }}
     >
-      <DrawerHeader>
-        <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          <MenuIcon />
-        </IconButton>
-      </DrawerHeader>
-      <List>
-        {SidebarElements.map((item, index) => (
-          <ListItem
-            button
-            key={index}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              minWidth: 0,
-              padding: isSidebarOpen ? '' : '8px 0',
-            }}
-          >
-            <Grid
-              container
-              alignItems='center'
-              flexDirection={isSidebarOpen ? 'row' : 'column'}
-            >
-              <Grid item xs={4}>
-                <ListItemIcon sx={{minWidth: 0, justifyContent: 'center'}}>
-                  {item.icon}
-                </ListItemIcon>
-              </Grid>
-              {isSidebarOpen && (
-                <Grid item xs={8}>
-                  <ListItemText primary={item.text} />
-                </Grid>
-              )}
-            </Grid>
+      <Box sx={{overflow: 'auto'}}>
+        <Typography variant='h4' sx={{p: 2}}>
+          SmartBank
+        </Typography>
+        <List>
+          <ListItem button key='Dashboard'>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary='Dashboard' />
           </ListItem>
-        ))}
-      </List>
+          <ListItem button key='Accounts'>
+            <ListItemIcon>
+              <CreditCard />
+            </ListItemIcon>
+            <ListItemText primary='Accounts' />
+          </ListItem>
+          <ListItem button key='Transfer'>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+            <ListItemText primary='Transfer' />
+          </ListItem>
+          <ListItem button key='Savings'>
+            <ListItemIcon>
+              <SavingsIcon />
+            </ListItemIcon>
+            <ListItemText primary='Savings' />
+          </ListItem>
+        </List>
+        <Typography variant='h6' sx={{p: 2}}>
+          Account
+        </Typography>
+        <List>
+          <ListItem button key='Settings'>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary='Settings' />
+          </ListItem>
+          <ListItem button key='Logout'>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary='Logout' />
+          </ListItem>
+        </List>
+      </Box>
     </Drawer>
   );
 };

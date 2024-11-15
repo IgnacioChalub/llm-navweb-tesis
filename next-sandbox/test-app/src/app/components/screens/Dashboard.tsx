@@ -1,12 +1,13 @@
 'use client';
 import {Box, Grid, Typography} from '@mui/material';
-import QuickActions from '../common/Card/QuickActions';
 import {BalanceCard} from '../common/Card/BalanceCard';
 import TransactionsTable from '../common/Table/TransactionsTable';
 import useBalanceStore from '../../store/useBalanceStore';
 import useUserStore from '../../store/useUserStore';
 import {useEffect} from 'react';
 import useTransactionStore from '../../store/useTransactionStore';
+import {GraphCard} from '../common/Card/GraphCard';
+import QuickActions from '../common/Card/QuickActions';
 
 const Dashboard = () => {
   const {balance, fetchBalance, balanceFetched, balanceLoading} =
@@ -17,6 +18,7 @@ const Dashboard = () => {
     transactionsLoading,
     fetchTransactions,
     transactionsFetched,
+    setTransactionsFetched,
   } = useTransactionStore();
 
   useEffect(() => {
@@ -29,7 +31,13 @@ const Dashboard = () => {
     if (userFetched && !transactionsFetched) {
       fetchTransactions(user.id);
     }
-  }, [user, userFetched, balanceFetched, transactionsFetched]);
+  }, [
+    user,
+    userFetched,
+    balanceFetched,
+    transactionsFetched,
+    setTransactionsFetched,
+  ]);
 
   return (
     <Box
@@ -40,17 +48,19 @@ const Dashboard = () => {
           {user.username}&apos;s Dashboard
         </Typography>
         <Grid container spacing={2}>
-          {/* Account Balance */}
-          <BalanceCard
-            balance={balance || 0}
-            loading={balanceLoading || transactionsLoading}
-          />
-          {/* Quick Actions */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
+            <BalanceCard
+              balance={balance || 0}
+              loading={balanceLoading || transactionsLoading}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <GraphCard />
+          </Grid>
+          <Grid item xs={12} md={4}>
             <QuickActions />
           </Grid>
         </Grid>
-
         {/* Recent Transactions */}
         <Box sx={{marginTop: '2rem'}}>
           <TransactionsTable

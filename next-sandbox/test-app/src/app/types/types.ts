@@ -33,3 +33,8 @@ export interface Transaction {
     username: string;
   };
 }
+
+export interface GraphData {
+  date: string;
+  balance: number;
+}

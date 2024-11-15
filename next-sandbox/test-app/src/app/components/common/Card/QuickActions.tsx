@@ -27,6 +27,7 @@ const QuickActions: React.FC = () => {
   const {user} = useUserStore();
   const {createTransaction} = useTransactionStore();
   const {setBalanceFetched} = useBalanceStore();
+  const {setTransactionsFetched} = useTransactionStore();
 
   const handleTabChange = (
     event: React.SyntheticEvent,
@@ -55,15 +56,24 @@ const QuickActions: React.FC = () => {
       setAmount('');
       setRecipient('');
       SuccessToast('Transaction created successfully');
+      setTransactionsFetched(false);
     } catch {
       ErrorToast('Failed to create transaction');
     }
   };
 
   return (
-    <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2, maxWidth: 400}}>
+    <Card
+      sx={{
+        padding: '1rem',
+        boxShadow: 3,
+        borderRadius: 2,
+        maxWidth: 400,
+        height: 300,
+      }}
+    >
       <CardContent>
-        <Typography variant='h6' gutterBottom>
+        <Typography variant='h5' gutterBottom>
           Quick Actions
         </Typography>
         <Tabs
