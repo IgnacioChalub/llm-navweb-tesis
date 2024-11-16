@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import {Box, Card, CardContent, Typography} from '@mui/material';
 import React from 'react';
+import {getLastFiveDays} from 'src/app/components/common/utils';
 
 // Register the required components for Chart.js
 ChartJS.register(
@@ -26,13 +27,7 @@ ChartJS.register(
 export const GraphCard = () => {
   // Hardcoded data for the graph
   const chartData = {
-    labels: [
-      '2024-11-10',
-      '2024-11-11',
-      '2024-11-12',
-      '2024-11-13',
-      '2024-11-14',
-    ],
+    labels: getLastFiveDays(),
     datasets: [
       {
         label: 'Balance Over Time',
