@@ -4,11 +4,11 @@ import type {ILoginBody} from 'src/app/types/types';
 
 export const loginUser = async ({username, password}: ILoginBody) => {
   const usernameLower = username.toLowerCase();
-  const passwordLower = password.toLowerCase();
+
   try {
     const response = await axios.post('/api/login', {
       username: usernameLower,
-      password: passwordLower,
+      password: password,
     });
 
     if (response.status === 200) {
