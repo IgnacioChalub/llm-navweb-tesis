@@ -1,33 +1,23 @@
-'use client';
-import useBalanceStore from 'src/app/store/useBalanceStore';
-import CustomCard from 'src/app/components/common/Card/CustomCard';
-import {useEffect} from 'react';
-import {Skeleton} from '@mui/material';
+import {Card, CardContent, CircularProgress, Typography} from '@mui/material';
 
 interface BalanceCardProps {
-  userId: number;
-  id?: string;
+  balance: number;
+  loading: boolean;
 }
 
 export const BalanceCard = (props: BalanceCardProps) => {
-  const {balance, loading, error, fetchBalance, balanceFetched} =
-    useBalanceStore();
-
-  useEffect(() => {
-    if (!balanceFetched) {
-      fetchBalance(props.userId);
-    }
-  }, [props.userId, fetchBalance, balanceFetched]);
-
   return (
-    <CustomCard title='Account Balance' id={props.id}>
-      {loading ? (
-        <Skeleton />
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <p>{balance ? `$${balance.toFixed(2)}` : '$0'}</p>
-      )}
-    </CustomCard>
+    <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
+      <CardContent>
+        <Typography variant='h5'>Account Balance</Typography>
+        <Typography variant='h3' fontWeight='bold'>
+          {props.loading ? (
+            <CircularProgress />
+          ) : (
+            props.balance?.toFixed(2) || '0.00'
+          )}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };

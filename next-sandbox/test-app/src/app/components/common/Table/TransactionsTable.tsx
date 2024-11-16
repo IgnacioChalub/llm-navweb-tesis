@@ -1,83 +1,92 @@
-'use client';
 import {
-  Paper,
+  Card,
+  CardContent,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
-  TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
-import {Text} from 'src/app/components/common/Text/Text';
-import {useEffect, useState} from 'react';
-import {getTransactions} from 'src/app/service/getTransactions';
-import {TransactionType} from 'src/app/types/types';
+import React from 'react';
+import type {Transaction} from 'src/app/types/types';
 import {
   capitalizeFirstLetter,
   formatCurrency,
   formatDate,
   getColor,
 } from 'src/app/components/common/utils';
+import {ArrowCircleDown, ArrowCircleUp, Send} from '@mui/icons-material';
 
 interface TransactionsTableProps {
-  userId: number;
-  id?: string;
+  transactions: Transaction[];
+  loading: boolean;
 }
 
-type transactions = {
-  date: string;
-  type: string;
-  amount: number;
-  from: string;
-  to: string;
-}[];
-
 const TransactionsTable = (props: TransactionsTableProps) => {
-  const [transactions, setTransactions] = useState<transactions>([]);
-
-  useEffect(() => {
-    getTransactions({
-      userId: props.userId,
-    }).then(setTransactions);
-  }, [props.userId]);
-
   return (
-    <TableContainer component={Paper} sx={{mb: 4, mt: 4}} id={props.id}>
-      <Table aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>From</TableCell>
-            <TableCell>To</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {transactions.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell component='th' scope='row'>
-                {formatDate(row.date)}
-              </TableCell>
-              <TableCell align='left'>
-                {capitalizeFirstLetter(row.type)}
-              </TableCell>
-              <TableCell align='left'>
-                <Text
-                  variant='body2'
-                  sx={{color: getColor(row.type, row.amount)}}
+    <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
+      <CardContent>
+        <Typography variant='h5' sx={{mb: 2}}>
+          Recent Transactions
+        </Typography>
+        <Table>
+          <TableBody>
+            {props.transactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    borderBottom: 'none',
+                    padding: '5px',
+                  }}
                 >
-                  {row.type === TransactionType.WITHDRAWAL ? '-' : '+'}
-                  {formatCurrency(row.amount)}
-                </Text>
-              </TableCell>
-              <TableCell align='left'>{row.from}</TableCell>
-              <TableCell align='left'>{row.to}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                  {/* Display icon based on transaction type */}
+                  <Typography
+                    variant='body2'
+                    component='span'
+                    sx={{
+                      color: getColor(transaction.type, transaction.amount),
+                      marginTop: '0.25rem',
+                    }}
+                  >
+                    {transaction.type === 'deposit' && <ArrowCircleUp />}
+                    {transaction.type === 'withdrawal' && <ArrowCircleDown />}
+                    {transaction.type === 'transfer' && <Send />}
+                  </Typography>
+                  <Typography variant='body1' fontWeight='bold'>
+                    {capitalizeFirstLetter(transaction.type)}
+                  </Typography>
+                  {transaction.type === 'transfer' && (
+                    <Typography variant='body2' color='textSecondary'>
+                      {transaction.sender
+                        ? `from ${transaction.sender.username}`
+                        : ''}
+                      {transaction.recipient
+                        ? ` to ${transaction.recipient.username}`
+                        : ''}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: getColor(transaction.type, transaction.amount),
+                    fontWeight: 'bold',
+                    borderBottom: 'none',
+                  }}
+                >
+                  {formatCurrency(transaction.amount)}
+                </TableCell>
+                <TableCell sx={{borderBottom: 'none'}}>
+                  {formatDate(transaction.date)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 };
 
