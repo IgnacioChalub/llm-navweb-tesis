@@ -2,6 +2,7 @@ import create from 'zustand';
 import axios from 'axios';
 import type {Transaction} from 'src/app/types/types';
 import {TransactionType} from 'src/app/types/types';
+import {ErrorToast, SuccessToast} from 'src/app/components/common/Toast/Toast';
 
 interface TransactionState {
   transactions: Transaction[];
@@ -56,7 +57,9 @@ const useTransactionStore = create<TransactionState>((set) => ({
       const response = await axios.post(`/api/transaction/${userId}`, payload);
 
       set({transactionsLoading: false});
+      SuccessToast('Transaction created successfully');
     } catch (error) {
+      ErrorToast(error.response.data.error || 'An error occurred');
       set({
         transactionsLoading: false,
       });
