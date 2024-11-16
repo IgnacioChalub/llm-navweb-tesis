@@ -2,10 +2,7 @@
 import React from 'react';
 import styles from 'src/app/styles/landing/header.module.css';
 import {useRouter} from 'next/navigation';
-import {
-  LoginButton,
-  RegisterButton,
-} from 'src/app/components/common/Button/Button';
+import {RegisterButton} from 'src/app/components/common/Button/Button';
 
 const Header: React.FC = () => {
   const {push} = useRouter();
@@ -13,13 +10,13 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles.logo}>SmartBank</div>
       <div className={styles.buttons}>
-        <LoginButton
+        <RegisterButton
           onClick={() => push('/login')}
           className={styles.login}
           id='login-button'
         >
           Login
-        </LoginButton>
+        </RegisterButton>
         <RegisterButton
           onClick={() => push('/register')}
           className={styles.register}

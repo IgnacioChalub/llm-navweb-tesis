@@ -1,3 +1,5 @@
+// pages/api/transactions/[userId].ts
+
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {PrismaClient} from '@prisma/client';
 
@@ -14,9 +16,10 @@ export default async function handler(
     // Validate userId
     const parsedUserId = parseInt(userId as string, 10);
     if (isNaN(parsedUserId)) {
-      return res.status(400).json({error: 'Invalid user ID'});
+      return res.status(400).json({error: 'Invalid user ID.'});
     }
 
+    // Validate amount
     if (typeof amount !== 'number' || amount <= 0) {
       return res.status(400).json({
         error: 'Invalid amount specified. Amount must be a positive number.',
@@ -29,7 +32,7 @@ export default async function handler(
       });
 
       if (!user) {
-        return res.status(404).json({error: 'User not found'});
+        return res.status(404).json({error: 'User not found.'});
       }
 
       switch (type) {
@@ -43,9 +46,13 @@ export default async function handler(
           if (!recipientId) {
             return res
               .status(400)
-              .json({error: 'Recipient ID required for transfer.'});
+              .json({error: 'Recipient ID is required for transfers.'});
           }
-          await handleTransfer(user, parseInt(recipientId), amount);
+          const parsedRecipientId = parseInt(recipientId, 10);
+          if (isNaN(parsedRecipientId)) {
+            return res.status(400).json({error: 'Invalid recipient ID.'});
+          }
+          await handleTransfer(user, parsedRecipientId, amount);
           break;
         default:
           return res
@@ -53,22 +60,30 @@ export default async function handler(
             .json({error: 'Invalid transaction type specified.'});
       }
 
-      res.status(200).json({message: 'Transaction completed successfully'});
-    } catch (error) {
+      res.status(200).json({message: 'Transaction completed successfully.'});
+    } catch (error: any) {
       console.error('Transaction failed:', error);
-      res.status(500).json({error: 'Internal server error'});
+
+      // Determine the type of error and respond accordingly
+      if (error.message === 'Insufficient funds') {
+        return res.status(400).json({error: 'Insufficient funds.'});
+      } else if (error.message === 'Recipient not found') {
+        return res.status(404).json({error: 'Recipient not found.'});
+      } else {
+        return res.status(500).json({error: 'Internal server error.'});
+      }
     }
   } else if (req.method === 'GET') {
     // Handle GET as defined earlier
-    // ... (Use the GET handler code from above)
+    await handleGetTransactions(req, res);
   } else {
     // Handle non-GET, non-POST requests
     res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.status(405).end(`Method ${req.method} Not Allowed.`);
   }
 }
 
-async function handleDeposit(user, amount) {
+async function handleDeposit(user: any, amount: number) {
   await prisma.transaction.create({
     data: {
       type: 'deposit',
@@ -85,7 +100,7 @@ async function handleDeposit(user, amount) {
   });
 }
 
-async function handleWithdrawal(user, amount) {
+async function handleWithdrawal(user: any, amount: number) {
   if (user.balance < amount) {
     throw new Error('Insufficient funds');
   }
@@ -106,7 +121,7 @@ async function handleWithdrawal(user, amount) {
   });
 }
 
-async function handleTransfer(user, recipientId, amount) {
+async function handleTransfer(user: any, recipientId: number, amount: number) {
   if (user.balance < amount) {
     throw new Error('Insufficient funds');
   }
@@ -141,4 +156,51 @@ async function handleTransfer(user, recipientId, amount) {
       },
     }),
   ]);
+}
+
+async function handleGetTransactions(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const {userId} = req.query;
+
+  // Validate userId
+  const parsedUserId = parseInt(userId as string, 10);
+  if (isNaN(parsedUserId)) {
+    return res.status(400).json({error: 'Invalid user ID.'});
+  }
+
+  try {
+    // Retrieve transactions for the user
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        OR: [{senderId: parsedUserId}, {recipientId: parsedUserId}],
+      },
+      select: {
+        id: true,
+        date: true,
+        type: true,
+        amount: true,
+        sender: {
+          select: {
+            username: true,
+          },
+        },
+        recipient: {
+          select: {
+            username: true,
+          },
+        },
+      },
+      orderBy: {
+        date: 'desc',
+      },
+      take: 10,
+    });
+
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error('Failed to retrieve transactions:', error);
+    res.status(500).json({error: 'Internal server error.'});
+  }
 }

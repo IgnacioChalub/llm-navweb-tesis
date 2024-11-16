@@ -18,7 +18,7 @@ import useBalanceStore from 'src/app/store/useBalanceStore';
 import useUserStore from 'src/app/store/useUserStore';
 import {TransactionType} from 'src/app/types/types';
 import {Button} from 'src/app/components/common/Button/Button';
-import {ErrorToast, SuccessToast} from 'src/app/components/common/Toast/Toast';
+import {ErrorToast} from 'src/app/components/common/Toast/Toast';
 
 const QuickActions: React.FC = () => {
   const [action, setAction] = useState(TransactionType.TRANSFER);
@@ -55,7 +55,6 @@ const QuickActions: React.FC = () => {
       setBalanceFetched(false);
       setAmount('');
       setRecipient('');
-      SuccessToast('Transaction created successfully');
       setTransactionsFetched(false);
     } catch {
       ErrorToast('Failed to create transaction');
