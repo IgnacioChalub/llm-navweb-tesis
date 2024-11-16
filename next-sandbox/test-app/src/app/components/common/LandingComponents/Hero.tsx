@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from 'src/app/styles/landing/hero.module.css';
-import {Button} from '../Button/Button';
+import {Button} from 'src/app/components/common/Button/Button';
 
 const Hero: React.FC = () => {
   return (

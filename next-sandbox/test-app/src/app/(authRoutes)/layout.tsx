@@ -1,7 +1,7 @@
 import 'src/app/globals.css';
 import type {ReactNode} from 'react';
 import {Box} from '@mui/material';
-import Sidebar from '../components/common/Sidebar/Sidebar';
+import Sidebar from 'src/app/components/common/Sidebar/Sidebar';
 
 export default function RootLayout({children}: {children: ReactNode}) {
   return (

@@ -1,12 +1,12 @@
 'use client';
 import type {FormEvent} from 'react';
 import React, {useState} from 'react';
-import {loginUser} from 'src/app/service/login';
 import {Typography} from '@mui/material';
 import {useRouter} from 'next/navigation';
-import AuthCard from '../common/Card/AuthCard';
 import styles from 'src/app/styles/app.module.css';
-import {RegisterButton} from '../common/Button/Button';
+import {loginUser} from 'src/app/service/login';
+import AuthCard from 'src/app/components/common/Card/AuthCard';
+import {RegisterButton} from 'src/app/components/common/Button/Button';
 
 export default function LoginPage() {
   const [username, setUsername] = useState<string>('');

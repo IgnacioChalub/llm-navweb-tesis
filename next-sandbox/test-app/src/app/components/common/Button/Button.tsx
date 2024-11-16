@@ -38,31 +38,11 @@ export const Button = (props: buttonProps) => {
   );
 };
 
-export const LoginButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
-  props,
-) => (
-  <Button
-    {...props}
-    id={`login-button ${props.id}`}
-    variant='contained'
-    color='inherit'
-    sx={{
-      backgroundColor: '#fff',
-      color: '#000',
-      '&:hover': {
-        backgroundColor: '#f3f1f1',
-      },
-      ...props.sx,
-    }}
-  />
-);
-
 export const RegisterButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
   props,
 ) => (
   <Button
     {...props}
-    id={`register-button ${props.id}`}
     variant='contained'
     color='primary'
     sx={{

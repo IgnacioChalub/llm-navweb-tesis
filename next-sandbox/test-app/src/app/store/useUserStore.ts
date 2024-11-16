@@ -1,7 +1,7 @@
 import create from 'zustand';
 import axios from 'axios';
-import type {User} from '../types/types';
-import {ErrorToast} from '../components/common/Toast/Toast';
+import type {User} from 'src/app/types/types';
+import {ErrorToast} from 'src/app/components/common/Toast/Toast';
 
 interface UserState {
   user: User;

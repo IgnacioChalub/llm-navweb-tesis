@@ -1,6 +1,6 @@
 import create from 'zustand';
 import axios from 'axios';
-import type {GraphData} from '../types/types';
+import type {GraphData} from 'src/app/types/types';
 
 interface GraphDataState {
   graphData: GraphData[];

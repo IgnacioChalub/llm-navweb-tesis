@@ -1,7 +1,7 @@
 import create from 'zustand';
 import axios from 'axios';
-import type {Transaction} from '../types/types';
-import {TransactionType} from '../types/types';
+import type {Transaction} from 'src/app/types/types';
+import {TransactionType} from 'src/app/types/types';
 
 interface TransactionState {
   transactions: Transaction[];
