@@ -29,9 +29,7 @@ export interface Transaction {
   sender?: {
     username: string;
   };
-  recipient?: {
-    username: string;
-  };
+  recipientAlias?: string;
 }
 
 export interface GraphData {

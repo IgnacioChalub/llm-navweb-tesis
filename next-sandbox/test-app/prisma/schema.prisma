@@ -14,35 +14,26 @@ datasource db {
 }
 
 model User {
-  id                   Int            @id @default(autoincrement())
-  username             String         @unique
-  email                String         @unique
-  password             String
-  balance              Float          @default(0)
-
-  // Transactions where the user is the sender
-  sentTransactions     Transaction[]  @relation("SentTransactions")
-
-  // Transactions where the user is the recipient
-  receivedTransactions Transaction[]  @relation("ReceivedTransactions")
-
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
+  id        Int           @id @default(autoincrement())
+  username  String        @unique
+  email     String        @unique
+  password  String
+  balance   Float         @default(0)
+  // Relations
+  transactionsSent     Transaction[] @relation("SentTransactions")
+  transactionsReceived Transaction[] @relation("ReceivedTransactions")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 model Transaction {
-  id             Int       @id @default(autoincrement())
-  date           DateTime  @default(now())
-  type           String    // e.g., "deposit", "withdrawal", "transfer"
+  id             Int        @id @default(autoincrement())
+  date           DateTime   @default(now())
+  type           String     // 'deposit', 'withdrawal', 'transfer'
   amount         Float
-
-  // Sender of the transaction (nullable for deposits)
   senderId       Int?
-  sender         User?     @relation("SentTransactions", fields: [senderId], references: [id])
-
-  // Recipient of the transaction (nullable for withdrawals)
+  sender         User?      @relation("SentTransactions", fields: [senderId], references: [id])
   recipientId    Int?
-  recipient      User?     @relation("ReceivedTransactions", fields: [recipientId], references: [id])
+  recipient      User?      @relation("ReceivedTransactions", fields: [recipientId], references: [id])
+  recipientAlias String?    // New field for recipient alias
 }
-
-

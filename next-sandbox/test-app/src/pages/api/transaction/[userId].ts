@@ -1,5 +1,3 @@
-// pages/api/transactions/[userId].ts
-
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {PrismaClient} from '@prisma/client';
 
@@ -10,7 +8,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const {userId} = req.query;
-  const {type, amount, recipientId} = req.body;
+  const {type, amount, recipientAlias} = req.body; // Changed from recipientId to recipientAlias
 
   if (req.method === 'POST') {
     // Validate userId
@@ -43,16 +41,12 @@ export default async function handler(
           await handleWithdrawal(user, amount);
           break;
         case 'transfer':
-          if (!recipientId) {
+          if (!recipientAlias || typeof recipientAlias !== 'string') {
             return res
               .status(400)
-              .json({error: 'Recipient ID is required for transfers.'});
+              .json({error: 'Recipient alias is required for transfers.'});
           }
-          const parsedRecipientId = parseInt(recipientId, 10);
-          if (isNaN(parsedRecipientId)) {
-            return res.status(400).json({error: 'Invalid recipient ID.'});
-          }
-          await handleTransfer(user, parsedRecipientId, amount);
+          await handleTransfer(user, recipientAlias, amount);
           break;
         default:
           return res
@@ -67,14 +61,11 @@ export default async function handler(
       // Determine the type of error and respond accordingly
       if (error.message === 'Insufficient funds') {
         return res.status(400).json({error: 'Insufficient funds.'});
-      } else if (error.message === 'Recipient not found') {
-        return res.status(404).json({error: 'Recipient not found.'});
       } else {
         return res.status(500).json({error: 'Internal server error.'});
       }
     }
   } else if (req.method === 'GET') {
-    // Handle GET as defined earlier
     await handleGetTransactions(req, res);
   } else {
     // Handle non-GET, non-POST requests
@@ -121,41 +112,36 @@ async function handleWithdrawal(user: any, amount: number) {
   });
 }
 
-async function handleTransfer(user: any, recipientId: number, amount: number) {
+async function handleTransfer(
+  user: any,
+  recipientAlias: string,
+  amount: number,
+) {
   if (user.balance < amount) {
     throw new Error('Insufficient funds');
   }
 
-  const recipient = await prisma.user.findUnique({
-    where: {id: recipientId},
+  // Convert alias to lowercase to ensure consistency
+  const normalizedAlias = recipientAlias.toLowerCase();
+
+  // Log the transfer without crediting any recipient
+  await prisma.transaction.create({
+    data: {
+      type: 'transfer',
+      amount,
+      senderId: user.id,
+      recipientAlias: normalizedAlias,
+      // recipientId remains undefined to indicate no credit
+    },
   });
 
-  if (!recipient) {
-    throw new Error('Recipient not found');
-  }
-
-  await prisma.$transaction([
-    prisma.transaction.create({
-      data: {
-        type: 'transfer',
-        amount,
-        senderId: user.id,
-        recipientId: recipient.id,
-      },
-    }),
-    prisma.user.update({
-      where: {id: user.id},
-      data: {
-        balance: {decrement: amount},
-      },
-    }),
-    prisma.user.update({
-      where: {id: recipient.id},
-      data: {
-        balance: {increment: amount},
-      },
-    }),
-  ]);
+  // Deduct the amount from the user's balance
+  await prisma.user.update({
+    where: {id: user.id},
+    data: {
+      balance: {decrement: amount},
+    },
+  });
 }
 
 async function handleGetTransactions(
@@ -191,6 +177,7 @@ async function handleGetTransactions(
             username: true,
           },
         },
+        recipientAlias: true, // Include recipientAlias in the response
       },
       orderBy: {
         date: 'desc',

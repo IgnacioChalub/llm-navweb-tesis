@@ -23,6 +23,7 @@ interface TransactionsTableProps {
 }
 
 const TransactionsTable = (props: TransactionsTableProps) => {
+  console.log(props.transactions);
   return (
     <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2}}>
       <CardContent>
@@ -63,8 +64,8 @@ const TransactionsTable = (props: TransactionsTableProps) => {
                       {transaction.sender
                         ? `from ${transaction.sender.username}`
                         : ''}
-                      {transaction.recipient
-                        ? ` to ${transaction.recipient.username}`
+                      {transaction.recipientAlias
+                        ? ` to ${transaction.recipientAlias}`
                         : ''}
                     </Typography>
                   )}
