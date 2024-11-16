@@ -27,12 +27,8 @@ export default async function handler(
           date: true,
           type: true,
           amount: true,
+          recipientAlias: true,
           sender: {
-            select: {
-              username: true,
-            },
-          },
-          recipient: {
             select: {
               username: true,
             },

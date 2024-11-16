@@ -11,28 +11,22 @@ import {
 } from 'chart.js';
 import {Box, Card, CardContent, Typography} from '@mui/material';
 import React from 'react';
+import {getLastFiveDays} from 'src/app/components/common/utils'; // Register required components for Chart.js
 
 // Register the required components for Chart.js
 ChartJS.register(
-  LineElement,
   CategoryScale,
   LinearScale,
   PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 );
 
 export const GraphCard = () => {
-  // Hardcoded data for the graph
   const chartData = {
-    labels: [
-      '2024-11-10',
-      '2024-11-11',
-      '2024-11-12',
-      '2024-11-13',
-      '2024-11-14',
-    ],
+    labels: getLastFiveDays(),
     datasets: [
       {
         label: 'Balance Over Time',
@@ -55,7 +49,7 @@ export const GraphCard = () => {
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: false, // Allows the chart to stretch to its container
     scales: {
       x: {
         title: {
@@ -71,15 +65,40 @@ export const GraphCard = () => {
         beginAtZero: true,
       },
     },
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: false,
+      },
+    },
   };
 
   return (
-    <Card sx={{padding: '1rem', boxShadow: 3, borderRadius: 2, height: 300}}>
-      <CardContent>
+    <Card
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <CardContent
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Typography variant='h5' sx={{mb: 2}}>
           Account Balance
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            flex: 1,
+            position: 'relative', // Required for Chart.js responsiveness
+          }}
+        >
           <Line data={chartData} options={chartOptions} />
         </Box>
       </CardContent>

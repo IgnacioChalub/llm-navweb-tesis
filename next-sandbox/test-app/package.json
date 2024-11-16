@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prisma": {
-      "seed": "node --loader ts-node/esm prisma/seed.ts"
-    }
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

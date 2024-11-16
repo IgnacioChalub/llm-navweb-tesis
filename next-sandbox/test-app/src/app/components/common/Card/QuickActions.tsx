@@ -5,9 +5,6 @@ import {
   Card,
   CardContent,
   FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   Tab,
   Tabs,
   TextField,
@@ -42,7 +39,7 @@ const QuickActions: React.FC = () => {
     const requestData = {
       type: action,
       amount: parseFloat(amount),
-      ...(action === TransactionType.TRANSFER && {recipientId: recipient}),
+      ...(action === TransactionType.TRANSFER && {recipientAlias: recipient}),
     };
 
     try {
@@ -50,7 +47,7 @@ const QuickActions: React.FC = () => {
         user.id,
         requestData.type,
         requestData.amount,
-        requestData.recipientId || '',
+        requestData.recipientAlias || '',
       );
       setBalanceFetched(false);
       setAmount('');
@@ -111,30 +108,22 @@ const QuickActions: React.FC = () => {
             placeholder='Enter amount'
             fullWidth
             id='amount-input'
+            type='number'
+            inputProps={{min: 0}}
           />
 
           {action === TransactionType.TRANSFER && (
             <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Recipient</InputLabel>
-              <Select
-                id='select-recipient'
-                value={recipient}
-                label='Recipient'
-                placeholder='Enter recipient'
+              {/* When filling this always be in lowercase*/}
+              <TextField
+                label='Recipient Alias'
                 variant='outlined'
-                onChange={(event) => setRecipient(event.target.value)}
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                placeholder='Enter alias'
                 fullWidth
-              >
-                <MenuItem id='beltran-bulbarella' value='1'>
-                  Beltran Bulbarella
-                </MenuItem>
-                <MenuItem id='ignacio-berdiñas' value='2'>
-                  Ignacio Berdiñas
-                </MenuItem>
-                <MenuItem id='ignacio-chalub' value='3'>
-                  Ignacio Chalub
-                </MenuItem>
-              </Select>
+                id='recipient-input'
+              />
             </FormControl>
           )}
           <Button

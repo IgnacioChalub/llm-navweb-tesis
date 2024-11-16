@@ -31,3 +31,19 @@ export const capitalizeFirstLetter = (string) => {
   if (!string) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const getLastFiveDays = (): string[] => {
+  const dates: string[] = [];
+  const today = new Date();
+
+  for (let i = 4; i >= 0; i--) {
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - i);
+    const year = pastDate.getFullYear();
+    const month = String(pastDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(pastDate.getDate()).padStart(2, '0');
+    dates.push(`${year}-${month}-${day}`);
+  }
+
+  return dates;
+};
