@@ -3,7 +3,11 @@
 import React from 'react';
 import styles from 'src/app/styles/landing.module.css';
 import {useRouter} from 'next/navigation';
-import {Button, RegisterButton} from 'src/app/components/common/Button/Button';
+import {
+  Button,
+  LoginButton,
+  RegisterButton,
+} from 'src/app/components/common/Button/Button';
 
 export const Landing: React.FC = () => {
   const {push} = useRouter();
@@ -14,13 +18,13 @@ export const Landing: React.FC = () => {
       <header className={styles.header}>
         <div className={styles.logo}>SmartBank</div>
         <div className={styles.headerButtons}>
-          <RegisterButton
+          <LoginButton
             onClick={() => push('/login')}
             className={styles.login}
             id='login-button'
           >
             Login
-          </RegisterButton>
+          </LoginButton>
           <RegisterButton
             onClick={() => push('/register')}
             className={styles.register}
