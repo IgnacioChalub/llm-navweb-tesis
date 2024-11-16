@@ -1,10 +1,10 @@
 import React, {type FormEvent, useState} from 'react';
 import {Typography} from '@mui/material';
-import {RegisterButton} from 'src/app/components/common/Button/Button';
-import {registerUser} from 'src/app/service/register';
 import {useRouter} from 'next/navigation';
 import styles from '../../styles/app.module.css';
 import AuthCard from '../common/Card/AuthCard';
+import {registerUser} from '../../service/register';
+import {RegisterButton} from '../common/Button/Button';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -22,8 +22,8 @@ export const RegisterPage = () => {
   return (
     <div className={styles.container}>
       <AuthCard
-        title='Login to SmartBank'
-        subtitle='Enter your credentials to access your account'
+        title='Register to SmartBank'
+        subtitle='Enter your information to create your account'
         inputs={[
           {
             id: 'register-email-input',
