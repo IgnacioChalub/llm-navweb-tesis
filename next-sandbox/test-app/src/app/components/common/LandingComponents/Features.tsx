@@ -1,6 +1,6 @@
 import React from 'react';
-import FeatureCard from './FeatureCard';
 import styles from 'src/app/styles/landing/features.module.css';
+import FeatureCard from 'src/app/components/common/LandingComponents/FeatureCard';
 
 const Features: React.FC = () => {
   return (

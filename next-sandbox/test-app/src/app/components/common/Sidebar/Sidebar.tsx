@@ -14,9 +14,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HomeIcon from '@mui/icons-material/Home';
 import {CreditCard} from '@mui/icons-material';
-import useUserStore from '../../../store/useUserStore';
 import {useRouter} from 'next/navigation';
-import {SuccessToast} from '../Toast/Toast';
+import {SuccessToast} from 'src/app/components/common/Toast/Toast';
+import useUserStore from 'src/app/store/useUserStore';
 
 const Sidebar = () => {
   const {logout} = useUserStore();

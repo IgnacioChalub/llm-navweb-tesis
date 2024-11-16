@@ -1,13 +1,13 @@
 'use client';
 import {Box, Grid, Typography} from '@mui/material';
-import {BalanceCard} from '../common/Card/BalanceCard';
-import TransactionsTable from '../common/Table/TransactionsTable';
-import useBalanceStore from '../../store/useBalanceStore';
-import useUserStore from '../../store/useUserStore';
 import {useEffect} from 'react';
-import useTransactionStore from '../../store/useTransactionStore';
-import {GraphCard} from '../common/Card/GraphCard';
-import QuickActions from '../common/Card/QuickActions';
+import useBalanceStore from 'src/app/store/useBalanceStore';
+import useUserStore from 'src/app/store/useUserStore';
+import useTransactionStore from 'src/app/store/useTransactionStore';
+import {BalanceCard} from 'src/app/components/common/Card/BalanceCard';
+import GraphCard from 'src/app/components/common/Card/GraphCard';
+import QuickActions from 'src/app/components/common/Card/QuickActions';
+import TransactionsTable from 'src/app/components/common/Table/TransactionsTable';
 
 const Dashboard = () => {
   const {balance, fetchBalance, balanceFetched, balanceLoading} =

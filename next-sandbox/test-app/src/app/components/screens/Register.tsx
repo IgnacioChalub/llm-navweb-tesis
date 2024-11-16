@@ -1,10 +1,10 @@
 import React, {type FormEvent, useState} from 'react';
 import {Typography} from '@mui/material';
 import {useRouter} from 'next/navigation';
-import styles from '../../styles/app.module.css';
-import AuthCard from '../common/Card/AuthCard';
-import {registerUser} from '../../service/register';
-import {RegisterButton} from '../common/Button/Button';
+import {registerUser} from 'src/app/service/register';
+import styles from 'src/app/styles/form.module.css';
+import AuthCard from 'src/app/components/common/Card/AuthCard';
+import {RegisterButton} from 'src/app/components/common/Button/Button';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');

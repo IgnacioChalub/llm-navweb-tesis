@@ -13,12 +13,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import {Button} from '../Button/Button';
-import {TransactionType} from '../../../types/types';
-import useUserStore from '../../../store/useUserStore';
-import {ErrorToast, SuccessToast} from '../Toast/Toast';
-import useTransactionStore from '../../../store/useTransactionStore';
-import useBalanceStore from '../../../store/useBalanceStore';
+import useTransactionStore from 'src/app/store/useTransactionStore';
+import useBalanceStore from 'src/app/store/useBalanceStore';
+import useUserStore from 'src/app/store/useUserStore';
+import {TransactionType} from 'src/app/types/types';
+import {Button} from 'src/app/components/common/Button/Button';
+import {ErrorToast, SuccessToast} from 'src/app/components/common/Toast/Toast';
 
 const QuickActions: React.FC = () => {
   const [action, setAction] = useState(TransactionType.TRANSFER);

@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import React from 'react';
 import {Box, Card, CardContent, Typography} from '@mui/material';
-import type {formInputProps} from '../Input/FormInput';
-import {FormInput} from '../Input/FormInput';
+import type {formInputProps} from 'src/app/components/common/Input/FormInput';
+import {FormInput} from 'src/app/components/common/Input/FormInput';
 
 interface AuthCardProps {
   title: string;

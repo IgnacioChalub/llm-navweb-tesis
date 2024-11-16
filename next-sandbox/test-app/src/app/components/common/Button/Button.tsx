@@ -43,7 +43,6 @@ export const LoginButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
 ) => (
   <Button
     {...props}
-    id={`login-button ${props.id}`}
     variant='contained'
     color='inherit'
     sx={{
@@ -62,7 +61,6 @@ export const RegisterButton: FC<Omit<buttonProps, 'variant' | 'color'>> = (
 ) => (
   <Button
     {...props}
-    id={`register-button ${props.id}`}
     variant='contained'
     color='primary'
     sx={{

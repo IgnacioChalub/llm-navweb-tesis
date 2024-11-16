@@ -1,8 +1,11 @@
 'use client';
 import React from 'react';
 import styles from 'src/app/styles/landing/header.module.css';
-import {LoginButton, RegisterButton} from '../Button/Button';
 import {useRouter} from 'next/navigation';
+import {
+  LoginButton,
+  RegisterButton,
+} from 'src/app/components/common/Button/Button';
 
 const Header: React.FC = () => {
   const {push} = useRouter();
