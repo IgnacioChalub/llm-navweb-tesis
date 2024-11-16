@@ -1,3 +1,4 @@
+'use client';
 import {
   Box,
   Drawer,
@@ -13,8 +14,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HomeIcon from '@mui/icons-material/Home';
 import {CreditCard} from '@mui/icons-material';
+import useUserStore from '../../../store/useUserStore';
+import {useRouter} from 'next/navigation';
+import {SuccessToast} from '../Toast/Toast';
 
 const Sidebar = () => {
+  const {logout} = useUserStore();
+  const {push} = useRouter();
   return (
     <Drawer
       variant='persistent'
@@ -68,7 +74,15 @@ const Sidebar = () => {
             </ListItemIcon>
             <ListItemText primary='Settings' />
           </ListItem>
-          <ListItem button key='Logout'>
+          <ListItem
+            button
+            key='Logout'
+            onClick={() => {
+              logout();
+              push('/login');
+              SuccessToast('Logged out successfully');
+            }}
+          >
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>

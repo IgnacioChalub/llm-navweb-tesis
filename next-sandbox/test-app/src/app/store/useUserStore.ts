@@ -1,6 +1,7 @@
 import create from 'zustand';
 import axios from 'axios';
 import type {User} from '../types/types';
+import {ErrorToast} from '../components/common/Toast/Toast';
 
 interface UserState {
   user: User;
@@ -33,11 +34,13 @@ const useUserStore = create<UserState>((set) => ({
     }
   },
 
-  logout: () => {
-    set({
-      user: {id: '', username: '', email: ''},
-      userFetched: false,
-    });
+  logout: async () => {
+    try {
+      await axios.post('/api/logout');
+      set({user: {id: '', username: '', email: ''}, userFetched: false});
+    } catch {
+      ErrorToast('Error logging out');
+    }
   },
 }));
 
