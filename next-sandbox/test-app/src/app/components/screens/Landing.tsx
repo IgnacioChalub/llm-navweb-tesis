@@ -19,6 +19,7 @@ export const Landing: React.FC = () => {
         <div className={styles.logo}>SmartBank</div>
         <div className={styles.headerButtons}>
           <LoginButton
+            // This is a redirect to /login
             onClick={() => push('/login')}
             className={styles.login}
             id='login-button'

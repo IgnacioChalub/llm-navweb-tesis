@@ -9,11 +9,9 @@ def run_bicho(openai_api_key, user_task, repo_path, entry_file_path) -> list[Act
     client = OpenAI(
         api_key=openai_api_key
     )
-
     components_list = resolve_components(entry_file_path, repo_path)
 
     file_text = "\n".join(components_list)
-
     system_message = f"""
         You are a virtual assistant that creates a list of actions to navigate and use web pages. 
         - The action response has to be a JSON with 5 keys: action, value, element_id, is_redirect, last
@@ -22,7 +20,8 @@ def run_bicho(openai_api_key, user_task, repo_path, entry_file_path) -> list[Act
         - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
         - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
         - If redirect is to the same page the user is currently on, don't set is_redirect to true
-        - If is_redirect is True, the value should be the url where the redirect is been done
+        - If is_redirect is True, the value should be the relative path where the redirect is been done
+        - Redirect could be push('/value'), been '/value' the relative path where the redirect is been done
         - value key is a string and can be null
         - element_id is a string and can be null
         - element_id is the id of the html element or component
@@ -73,7 +72,8 @@ def run_bicho(openai_api_key, user_task, repo_path, entry_file_path) -> list[Act
                     - In case that clicking a button generates a redirect the flag is_redirect should be True and the value should be the url where the redirect is been done otherwise it should be False
                     - If the action is the last action needed to complete the task: set the last flag to True, otherwise it should be False
                     - If redirect is to the same page the user is currently on, don't set is_redirect to true
-                    - If is_redirect is True, the value should be the url where the redirect is been done
+                    - If is_redirect is True, the value should be the relative path where the redirect is been done
+                    - Redirect could be push('/value'), been '/value' the relative path where the redirect is been done
                     - value key is a string and can be null
                     - element_id is a string and can be null
                     - element_id is the id of the html element or component

@@ -12,8 +12,8 @@ def main():
     repo_path = "/Users/ignaciochalub/faculty/llm-navweb-tesis/next-sandbox/test-app"
     entry_file_path = "/src/app/page.tsx"
 
-    # user_task = get_text_from_speech(openai_api_key)
-    user_task = "Login with username mateo and password mateo"
+    user_task = get_text_from_speech(openai_api_key)
+    # user_task = "Login with username ignacio and password ignacio, then deposit 150, then send 100 to b.bulbarella and after that widthraw 50"
     print("User task:", user_task)
 
 

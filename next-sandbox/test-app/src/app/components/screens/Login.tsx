@@ -16,6 +16,7 @@ export default function LoginPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await loginUser({username, password}).then(() => {
+      // This is a redirect to /dashboard
       router.push('/dashboard');
     });
   };
