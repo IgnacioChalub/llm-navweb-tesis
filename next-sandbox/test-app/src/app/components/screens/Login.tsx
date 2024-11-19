@@ -1,12 +1,12 @@
 'use client';
 import type {FormEvent} from 'react';
 import React, {useState} from 'react';
-import styles from 'src/app/styles/form.module.css';
-import {loginUser} from 'src/app/service/login';
-import {Box} from '@mui/material';
-import {FormInput} from 'src/app/components/common/Input/FormInput';
-import {Button} from 'src/app/components/common/Button/Button';
+import {Typography} from '@mui/material';
 import {useRouter} from 'next/navigation';
+import styles from 'src/app/styles/app.module.css';
+import {loginUser} from 'src/app/service/login';
+import AuthCard from 'src/app/components/common/Card/AuthCard';
+import {RegisterButton} from 'src/app/components/common/Button/Button';
 
 export default function LoginPage() {
   const [username, setUsername] = useState<string>('');
@@ -16,37 +16,64 @@ export default function LoginPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await loginUser({username, password}).then(() => {
+      // This is a redirect to /dashboard
       router.push('/dashboard');
     });
   };
 
   return (
-    <Box className={styles.container}>
-      <Box className={styles.card}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <FormInput
-            id='login-username-input'
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder='Username'
-          />
-          <FormInput
-            id='login-password-input'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='Password'
-          />
-          <Button
+    <div className={styles.container}>
+      <AuthCard
+        title='Login to SmartBank'
+        subtitle='Enter your credentials to access your account'
+        inputs={[
+          {
+            id: 'login-username-input',
+            type: 'text',
+            placeholder: 'JohnDoe',
+            value: username,
+            onChange: (e) => setUsername(e.target.value),
+            fullWidth: true,
+            label: 'Username',
+          },
+          {
+            id: 'login-password-input',
+            type: 'password',
+            placeholder: 'Password',
+            value: password,
+            onChange: (e) => setPassword(e.target.value),
+            fullWidth: true,
+            label: 'Password',
+          },
+        ]}
+        button={
+          <RegisterButton
             id='login-button-submit'
             type='submit'
             disabled={!username || !password}
+            fullWidth
+            onClick={handleSubmit}
           >
-            Login
-          </Button>
-        </form>
-      </Box>
-    </Box>
+            login
+          </RegisterButton>
+        }
+        footer={
+          <Typography variant='body1' mt='2rem'>
+            Don&apos;t have an account?{' '}
+            <a
+              id='login-register-link'
+              href='/register'
+              style={{
+                color: 'rgb(54,98,227)',
+                textDecoration: 'none',
+                fontWeight: 'bold',
+              }}
+            >
+              Register here
+            </a>
+          </Typography>
+        }
+      />
+    </div>
   );
 }

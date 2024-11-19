@@ -98,7 +98,7 @@ def find_page_tsx(repository_path, url):
 
     if page_tsx:
         # Only return the path after /next-sandbox
-        return page_tsx.split("/llm-navweb-tesis", 1)[-1]
+        return page_tsx.split("/test-app", 1)[-1]
 
     return None  # May be None if no matching page.tsx is found
 
